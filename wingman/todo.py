@@ -24,8 +24,7 @@ def process_raw_todo(todo_lines: List[Tuple[int, str]], path: str = __file__) ->
     else:
         body = ""
     title = title[len("# TODO:") :].strip()
-    todo = Todo(title=title, body=body, line_no=line_no, origin=path)
-    return todo
+    return Todo(title=title, body=body, line_no=line_no, origin=path)
 
 
 def parse(raw_source: str, path: str = __file__) -> List[Todo]:

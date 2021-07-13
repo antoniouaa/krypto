@@ -14,8 +14,10 @@ python-dotenv = "^0.18.0"
 pytest = "^6.2.4"
 black = "^21.6b0"
 taskipy = "^1.8.1"
+click = "^8.0.1"
 
 [tool.taskipy.tasks]
+launch = { cmd = "python -m wingman", help = "Create TODOs from your project"}
 test = { cmd = "pytest -vvv", help = "Run all the tests"}
 
 

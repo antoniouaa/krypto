@@ -13,18 +13,20 @@ class Todo:
     origin: pathlib.Path
 
     def __str__(self) -> str:
-        return f"{self.title}:\n{self.body}\nIn {self.origin} - line {self.line_no}"
+        return (
+            f"TODO:\n{self.title}:\n{self.body}\nIn {self.origin} - line {self.line_no}"
+        )
 
 
 def process_raw_todo(todo_lines: List[Tuple[int, str]]) -> Todo:
-    title = todo_lines[0]
+    line_no, title = todo_lines[0]
     if len(todo_lines) > 1:
-        body = "\n".join([line for _, line in todo_lines[1:]])
+        body = "\n".join([line[2:] for _, line in todo_lines[1:]])
     else:
         body = ""
-    title = title[1][len("# TODO:") :].strip()
+    title = title[len("# TODO:") :].strip()
     todo = Todo(
-        title=title, body=body, line_no=title[0], origin=pathlib.Path("__file__")
+        title=title, body=body, line_no=line_no, origin=pathlib.Path("__file__")
     )
     return todo
 

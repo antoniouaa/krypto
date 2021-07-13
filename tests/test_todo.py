@@ -1,4 +1,4 @@
-from wingman import todo
+from wingman import todo as TODO
 
 
 def test_todo():
@@ -6,8 +6,9 @@ def test_todo():
 def test_func(*args, **kwargs):
     # TODO: Implement this function
 """
-    todos = todo.parse(test_program)
+    todos = TODO.parse(test_program)
     assert len(todos) == 1
+    assert todos[0].title == "Implement this function"
 
 
 def test_todo_many():
@@ -16,7 +17,7 @@ def test_func(*args, **kwargs):
     # TODO: Implement this function
     # TODO: Check if the assertions pass
 """
-    todos = todo.parse(test_program)
+    todos = TODO.parse(test_program)
     print(todos)
     assert len(todos) == 2
     assert todos[0].title == "Implement this function"
@@ -30,5 +31,9 @@ def test_func(*args, **kwargs):
     # This function should perform some task
     # and return some output
 """
-    todos = todo.parse(test_program)
+    todos = TODO.parse(test_program)
     assert len(todos) == 1
+    todo = todos[0]
+    print(todo)
+    assert todo.title == "Implement this function"
+    assert todo.body == "This function should perform some task\nand return some output"

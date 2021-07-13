@@ -12,7 +12,7 @@ from wingman.todo import parse
 from wingman.github import create_issues
 
 # TODO: Make config file
-# Sometimes you might wanna have TODOs in your tests
+# Sometimes you might wanna have TODOs in your tests.
 # Right now wingman will completely ignore any file with the
 # substring "test" in the path. I would want to be able to
 # configure this behaviour.

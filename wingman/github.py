@@ -12,10 +12,6 @@ BASE_URL = "https://api.github.com"
 HEADER = {"Accept": "application/vnd.github.v3+json"}
 
 
-class GithubError(Exception):
-    ...
-
-
 def get_basename() -> str:
     plat = platform.system()
     if plat == "Windows":
@@ -29,18 +25,10 @@ def get_basename() -> str:
     return username, repo_name
 
 
-# TODO: Check if issue already exists to prevent duplication
-# If the issue does already exist then update its body with the new body.
-# Lets check if this todo is updated!
-
-
 def get_issue(existing_issues: List[Dict[str, str]], title: str) -> Dict[str, str]:
     for issue in existing_issues:
         if issue["title"] == title:
             return issue
-
-
-# TODO: Check empty todo body
 
 
 def create_issues(todos: List[Todo], token: str) -> int:

@@ -1,7 +1,25 @@
 from wingman import todo as TODO
 
 
-def test_todo():
+def test_todo_just_comments():
+    test_program = """
+def test_func(*args, **kwargs):
+    # not a todo
+    # not a todo either
+"""
+    todos = TODO.parse(test_program)
+    assert len(todos) == 0
+
+
+def test_todo_none():
+    test_program = """
+def test_func(*args, **kwargs):
+"""
+    todos = TODO.parse(test_program)
+    assert len(todos) == 0
+
+
+def test_todo_one():
     test_program = """
 def test_func(*args, **kwargs):
     # TODO: Implement this function

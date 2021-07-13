@@ -8,7 +8,6 @@ class Todo:
     title: str
     body: str
     line_no: int
-    # created_at: datetime.datetime
     origin: pathlib.Path
 
     def __str__(self) -> str:

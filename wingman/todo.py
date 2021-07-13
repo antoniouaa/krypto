@@ -21,13 +21,11 @@ class Todo:
 def process_raw_todo(todo_lines: List[Tuple[int, str]]) -> Todo:
     line_no, title = todo_lines[0]
     if len(todo_lines) > 1:
-        body = "\n".join([line[2:] for _, line in todo_lines[1:]])
+        body = " ".join([line[2:] for _, line in todo_lines[1:]])
     else:
         body = ""
     title = title[len("# TODO:") :].strip()
-    todo = Todo(
-        title=title, body=body, line_no=line_no, origin=pathlib.Path("__file__")
-    )
+    todo = Todo(title=title, body=body, line_no=line_no, origin=pathlib.Path(__file__))
     return todo
 
 

@@ -34,6 +34,5 @@ def test_func(*args, **kwargs):
     todos = TODO.parse(test_program)
     assert len(todos) == 1
     todo = todos[0]
-    print(todo)
     assert todo.title == "Implement this function"
-    assert todo.body == "This function should perform some task\nand return some output"
+    assert todo.body == "This function should perform some task and return some output"

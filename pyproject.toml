@@ -10,7 +10,6 @@ homepage = "https://github.com/antoniouaa/wingman"
 [tool.poetry.dependencies]
 python = "^3.7.6"
 requests = "^2.25.1"
-python-dotenv = "^0.18.0"
 click = "^8.0.1"
 
 [tool.poetry.dev-dependencies]

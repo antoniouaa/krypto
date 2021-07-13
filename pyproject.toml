@@ -6,7 +6,7 @@ authors = ["antoniouaa <antoniouaa@hotmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.7.6"
 requests = "^2.25.1"
 python-dotenv = "^0.18.0"
 

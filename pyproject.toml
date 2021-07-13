@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "wingman"
+version = "0.1.0"
+description = "A python API that creates issues in your repos based on // TODO: comments in your code"
+authors = ["antoniouaa <antoniouaa@hotmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "^2.25.1"
+python-dotenv = "^0.18.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.4"
+black = "^21.6b0"
+taskipy = "^1.8.1"
+
+[tool.taskipy.tasks]
+test = { cmd = "pytest -vvv", help = "Run all the tests"}
+
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

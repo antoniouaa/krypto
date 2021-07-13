@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-import datetime
 from typing import List, Tuple
 import pathlib
 
@@ -18,21 +17,22 @@ class Todo:
         )
 
 
-def process_raw_todo(todo_lines: List[Tuple[int, str]]) -> Todo:
+def process_raw_todo(todo_lines: List[Tuple[int, str]], path: str = __file__) -> Todo:
     line_no, title = todo_lines[0]
     if len(todo_lines) > 1:
         body = " ".join([line[2:] for _, line in todo_lines[1:]])
     else:
         body = ""
     title = title[len("# TODO:") :].strip()
-    todo = Todo(title=title, body=body, line_no=line_no, origin=pathlib.Path(__file__))
+    todo = Todo(title=title, body=body, line_no=line_no, origin=path)
     return todo
 
 
-def parse(raw_source: str) -> List[Todo]:
+def parse(raw_source: str, path: str = __file__) -> List[Todo]:
     result: List[Todo] = []
 
-    assert raw_source, "No source code provided"
+    if not raw_source:
+        return []
 
     lines = raw_source.split("\n")
     normalised_lines = [line.strip() for line in lines]
@@ -53,7 +53,7 @@ def parse(raw_source: str) -> List[Todo]:
             possible.append((index, line))
         elif start and not line.startswith("#"):
             start = False
-            todo = process_raw_todo(possible)
+            todo = process_raw_todo(possible, path)
             result.append(todo)
             possible = []
 

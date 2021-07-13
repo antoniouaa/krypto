@@ -50,7 +50,7 @@ def create_issues(todos: List[Todo], token: str) -> int:
             print(f"> Issue {todo.title}")
             body = {
                 "title": todo.title,
-                "body": f"{todo.body}\nLine: {todo.line_no} in {todo.origin}",
+                "body": f"{todo.body}\n\nLine: {todo.line_no} in [{todo.origin}]({todo.origin})",
             }
             response = session.post(url, json=body)
             if response.status_code != 201:

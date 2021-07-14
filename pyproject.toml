@@ -1,15 +1,13 @@
 [tool.poetry]
-name = "wingman"
+name = "krypto"
 version = "0.1.0"
-description = "A python API that creates issues in your repos based on // TODO: comments in your code"
+description = "A python API that creates issues in your repos based on TODO: comments in your code"
 authors = ["antoniouaa <antoniouaa@hotmail.com>"]
 license = "MIT"
-repository = "https://github.com/antoniouaa/wingman"
-homepage = "https://github.com/antoniouaa/wingman"
 
 [tool.poetry.dependencies]
-python = "^3.7.6"
-requests = "^2.25.1"
+python = "^3.7"
+requests = "^2.26.0"
 click = "^8.0.1"
 
 [tool.poetry.dev-dependencies]
@@ -18,10 +16,10 @@ black = "^21.6b0"
 taskipy = "^1.8.1"
 
 [tool.poetry.scripts]
-wingman = "wingman:run"
+krypto = "krypto:run"
 
 [tool.taskipy.tasks]
-launch = { cmd = "python -m wingman", help = "Create TODOs from your project"}
+launch = { cmd = "python -m krypto", help = "Create TODOs from your project"}
 test = { cmd = "pytest -vvv", help = "Run all the tests"}
 
 [build-system]

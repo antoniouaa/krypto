@@ -23,6 +23,10 @@ def process_raw_todo(todo_lines: List[Tuple[int, str]], path: str = __file__) ->
     else:
         body = ""
     title = title[len("# TODO:") :].strip()
+
+    # TODO: path is messed up on issue post
+    # convert from `krypto\__init__.py` to
+    # `krypto/__init__.py`
     return Todo(title=title, body=body, line_no=line_no, origin=path)
 
 

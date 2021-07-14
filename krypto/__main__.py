@@ -1,4 +1,4 @@
-from wingman import run
+from krypto import run
 
 
 if __name__ == "__main__":

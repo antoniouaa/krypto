@@ -1,4 +1,4 @@
-from wingman import todo as TODO
+from krypto import todo as TODO
 
 
 def test_todo_just_comments():

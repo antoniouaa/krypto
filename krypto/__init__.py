@@ -24,6 +24,12 @@ from krypto.github import create_issues
 # or maybe `# TODO[Enhancement]: title here`
 
 
+# TODO: Possible creation of pre-push git hook
+# Think about making this into a git script to
+# hook into the pre-push action instead of having to run
+# the script manually
+
+
 @click.command()
 @click.argument("path")
 def run(path):

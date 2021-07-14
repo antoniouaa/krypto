@@ -60,7 +60,7 @@ def create_issues(todos: List[Todo], token: str) -> int:
             body = {
                 "title": todo.title,
                 "body": issue_body
-                + f"\n\nLine: {todo.line_no} in [`{todo.origin}`](https://github.com/{username}/{repo_name}/blob/master/{normalised_origin})",
+                + f"\n\nLine: {todo.line_no} in [`{todo.origin}`](https://github.com/{username}/{repo_name}/blob/master/{normalised_origin}#L{todo.line_no})",
             }
             if todo.title not in existing_titles:
                 response = session.post(url, json=body)

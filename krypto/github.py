@@ -31,6 +31,15 @@ def get_issue(existing_issues: List[Dict[str, str]], title: str) -> Dict[str, st
             return issue
 
 
+# TODO: Issues are reopened if they're closed through the website
+# ATM if a user closes an open issue through the Github GUI
+# but does not remove the TODO from the code and reruns krypto,
+# krypto opens a new issue with the same title and body.
+# Krypto should check if an issue with the same title or number exists
+# on github, whether it is closed or still open and decide whether to post
+# or not.
+
+
 def create_issues(todos: List[Todo], token: str) -> int:
     if not todos:
         print("No todos to create!")

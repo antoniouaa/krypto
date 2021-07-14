@@ -1,17 +1,29 @@
-# krypto
+<!-- ![Krypto the superdog!](./assets/krypto.jpg) -->
+<!-- ![usage of krypto](./assets/sample-use.gif) -->
 
-A neat little sidekick python script to create issues on your repo based on comments left in the code on your behalf
+<div align="center">
+    <img src="./assets/krypto.jpg"  style="border-radius: 10%;">
+    <h1 style="font-size: 36px">Krypto</h1>
+    <h2>A neat little sidekick python script to create issues on your repo based on comments left in the code on your behalf</h2>
+</div>
 
-![Krypto the superdog!](./assets/krypto.jpg)
+<div align="center">
+    <img src="./assets/sample-use.gif"/>
+</div>
 
 Convert todo comments in your code
 
 ```py
-# TODO: Sample todo title
+# TODO: Make config file
+# Sometimes you might wanna have TODOs in your tests.
+# Right now krypto will completely ignore any file with the
+# substring "test" in the path. I would want to be able to
+# configure this behaviour.
 ```
 
 to GitHub issues on the repository you're working on!
-![Sample issue on Github](./assets/issueOnGithub.png)
+
+![Sample issue on Github](./assets/issue-on-github.png)
 
 ---
 

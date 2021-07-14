@@ -1,8 +1,6 @@
 import os
 import pathlib
 
-# TODO: Sample todo title
-
 
 import click
 

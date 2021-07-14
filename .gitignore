@@ -10,3 +10,5 @@
 dist
 
 **/*pyproject.toml
+
+**/*.mp4

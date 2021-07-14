@@ -84,3 +84,8 @@ def create_issues(todos: List[Todo], token: str) -> int:
             link = response.json()["url"]
             print(f"Created: Issue#{number} at {link}")
     return failed
+
+
+# TODO: Add issue number to TODO in code
+# It would be useful to have the assigned issue number from github
+# attached to the TODO in code so you can immediateyl identify the TODOs

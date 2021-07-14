@@ -1,7 +1,6 @@
 import os
 import pathlib
 
-
 import click
 
 token = os.getenv("GITHUB_PERSONAL_TOKEN")
@@ -17,6 +16,12 @@ from krypto.github import create_issues
 # Right now krypto will completely ignore any file with the
 # substring "test" in the path. I would want to be able to
 # configure this behaviour.
+
+
+# TODO: Allow for different standard labels to be attached to the issues
+# Mayhap I would like to assign a todo certain labels like `Enhancement`
+# Possible syntax `# Enhancement: title here`
+# or maybe `# TODO[Enhancement]: title here`
 
 
 @click.command()

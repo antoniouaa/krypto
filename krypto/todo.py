@@ -5,7 +5,8 @@ import pathlib
 
 TODO_PREFIX = "# TODO"
 TODO_PREFIX_BODY = "#"
-PATTERN = r"# TODO(\[(.+)\])?:(.*)"
+SEPARATORS = r"[\s?,-/~#\\\s\s?]+"
+PATTERN = rf"# TODO(\[([a-zA-Z{SEPARATORS}]*)?\])?:(.*)"
 
 
 class TODOError(Exception):
@@ -30,11 +31,12 @@ class Todo:
 def extract_title_info(pattern: str, title_line: str) -> Tuple[str, List[str]]:
     match = re.search(pattern, title_line)
     if match is None:
-        return []
+        raise TODOError("TODO structure is malformed")
     _, labels, title = match.groups()
     title = title.strip()
     if labels:
-        labels = labels.split(",")
+        # labels = labels.split(",")
+        labels = re.split(SEPARATORS, labels)
         return title, [label.strip() for label in labels]
     return title, []
 

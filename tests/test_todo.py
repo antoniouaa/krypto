@@ -10,7 +10,7 @@ def test_func(*args, **kwargs):
     # body of todo
 """
     with pytest.raises(TODOError):
-        todos = parse(test_program)
+        parse(test_program)
 
 
 def test_todo_just_comments():

@@ -35,13 +35,13 @@ To acquire a token navigate to [Developer Settings](https://github.com/settings/
 With the token in hand, simply,
 
 ```sh
-export GITHUB_PERSONAL_TOKEN = token_here
+export TOKEN_GITHUB = token_here
 ```
 
 or
 
 ```ps
-$env:GITHUB_PERSONAL_TOKEN = token_here
+$env:TOKEN_GITHUB = token_here
 ```
 
 If you want the token to persist across sessions you need to add it to your `.bashrc` or `$PROFILE`.

@@ -3,7 +3,7 @@ import pathlib
 
 import click
 
-token = os.getenv("GITHUB_PERSONAL_TOKEN")
+token = os.getenv("TOKEN_GITHUB")
 assert token is not None
 
 __version__ = "0.1.0"

@@ -4,13 +4,18 @@
 <div align="center">
     <img src="./assets/krypto.jpg"  style="border-radius: 10%;">
     <h1 style="font-size: 36px">Krypto</h1>
-    <h2>A neat little sidekick python script to create issues on your repo based on comments left in the code on your behalf</h2>
+
+![tests](https://github.com/antoniouaa/krypto/actions/workflows/test.yml/badge.svg)
+![black](https://github.com/antoniouaa/krypto/actions/workflows/black.yml/badge.svg)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+<h2>A neat little sidekick python script to create issues on your repo based on comments left in the code on your behalf</h2>
+
 </div>
 
 <div align="center">
     <img src="./assets/sample-use.gif"/>
 </div>
-
 Convert todo comments in your code
 
 ```py

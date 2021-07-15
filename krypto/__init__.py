@@ -44,8 +44,8 @@ def run(path):
 
     failed = create_issues(todos, token=token)
     if todos:
-        print("Finished creating issues!")
+        click.echo("Finished creating issues!")
     if failed:
-        print("Some issues have failed")
+        click.echo("Some issues have failed")
         for todo in failed:
-            print(todo.title)
+            click.echo(todo.title)

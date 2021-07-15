@@ -2,7 +2,7 @@ import os
 import pathlib
 import platform
 import subprocess
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 import requests
 
@@ -53,7 +53,6 @@ def create_issues(todos: List[Todo], token: str) -> int:
         print("No todos to create!")
         return
 
-    token = os.getenv("GITHUB_PERSONAL_TOKEN")
     username, repo_name = get_basename()
     url = f"{BASE_URL}/repos/{username}/{repo_name}/issues"
     print(url)

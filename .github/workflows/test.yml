@@ -19,8 +19,8 @@ jobs:
 
       - name: Install dependencies
         run: poetry install
-        env:
-          TOKEN_GITHUB: ${{ github.token }}
 
       - name: Run the tests
         run: poetry run task test -vvv
+        env:
+          TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}

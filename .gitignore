@@ -1,14 +1,22 @@
+# Env variables
 .env
 
+# Compilation artifacts
 **/__pycache__
 **/.pytest_cache
 
+# Virtual environments
 **/venv
 
+# Distribution artifacts
 **/*.egg-info
-
 dist
 
+# Old configs
 **/*pyproject.toml
 
+# Assets
 **/*.mp4
+
+# Testing and coverage
+.coverage

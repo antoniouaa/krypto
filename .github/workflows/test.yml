@@ -18,9 +18,15 @@ jobs:
         uses: snok/install-poetry@v1.1.6
 
       - name: Install dependencies
-        run: poetry install
+        run: |
+          poetry install
+          poetry -V
+          poetry run pytest -V
 
       - name: Run the tests
-        run: poetry run task test -vvv
+        run: |
+          poetry run task test -vvv
+          poetry run coveralls
         env:
           TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}

@@ -48,9 +48,6 @@ def prepare_body(todo: Todo, username: str, repo_name: str) -> dict:
     }
 
 
-# TODO[Bug]: test whether this issue has the correct label
-
-
 def create_issues(todos: List[Todo], token: str) -> int:
     if not todos:
         print("No todos to create!")

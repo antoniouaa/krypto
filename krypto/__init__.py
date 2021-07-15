@@ -18,10 +18,11 @@ from krypto.github import create_issues
 # configure this behaviour.
 
 
-# TODO[Enhancement]: Allow for different standard labels to be attached to the issues
+# TODO[Enhancement, Bug]: Allow for different standard labels to be attached to the issues
 # Mayhap I would like to assign a todo certain labels like `Enhancement`
 # Possible syntax `# Enhancement: title here`
 # or maybe `# TODO[Enhancement]: title here`
+# Labels are overwritten right now instead of extended
 
 
 # TODO: Possible creation of pre-push git hook

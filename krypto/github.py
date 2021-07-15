@@ -10,6 +10,7 @@ from krypto.todo import Todo
 
 BASE_URL = "https://api.github.com"
 HEADER = {"Accept": "application/vnd.github.v3+json"}
+ALL_ISSUES = {"state": "all"}
 
 
 def get_basename() -> str:
@@ -50,14 +51,14 @@ def create_issues(todos: List[Todo], token: str) -> int:
     url = f"{BASE_URL}/repos/{username}/{repo_name}/issues"
     print(url)
     failed = []
-    print("Creating issues...")
+    print("Creating issues...\n")
 
     with requests.Session() as session:
         session.headers.update({"authorization": f"token {token}"})
         session.headers.update(HEADER)
 
-        existing_issues = session.get(url).json()
-        existing_titles = [issue["title"] for issue in existing_issues]
+        existing_issues = session.get(url, params=ALL_ISSUES).json()
+        existing_titles = [issue["title"].lower() for issue in existing_issues]
         for todo in todos:
             print(f"> Issue {todo.title}")
             if todo.body:
@@ -71,7 +72,7 @@ def create_issues(todos: List[Todo], token: str) -> int:
                 "body": issue_body
                 + f"\n\nLine: {todo.line_no} in [`{todo.origin}`](https://github.com/{username}/{repo_name}/blob/master/{normalised_origin}#L{todo.line_no})",
             }
-            if todo.title not in existing_titles:
+            if todo.title.lower() not in existing_titles:
                 response = session.post(url, json=body)
             else:
                 issue = get_issue(existing_issues, todo.title)
@@ -82,7 +83,7 @@ def create_issues(todos: List[Todo], token: str) -> int:
                 continue
             number = response.json()["number"]
             link = response.json()["url"]
-            print(f"Created: Issue#{number} at {link}")
+            print(f"Created: Issue#{number} at {link}\n")
     return failed
 
 

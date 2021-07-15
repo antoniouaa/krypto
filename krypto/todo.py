@@ -35,7 +35,6 @@ def extract_title_info(pattern: str, title_line: str) -> Tuple[str, List[str]]:
     _, labels, title = match.groups()
     title = title.strip()
     if labels:
-        # labels = labels.split(",")
         labels = re.split(SEPARATORS, labels)
         return title, [label.strip() for label in labels]
     return title, []

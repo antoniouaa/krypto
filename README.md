@@ -31,8 +31,6 @@ to GitHub issues on the repository you're working on!
 
 ![Sample issue on Github](./assets/issue-on-github.png)
 
----
-
 ## Env Variables
 
 For this to work you need to have a github token in your environment variables.
@@ -51,6 +49,52 @@ $env:TOKEN_GITHUB = token_here
 ```
 
 If you want the token to persist across sessions you need to add it to your `.bashrc` or `$PROFILE`.
+
+## Usage
+
+### Write a TODO
+
+First, create a TODO in the form of a block comment.
+The TODO must contain a title. Body and labels are optional.
+
+Examples:
+
+- Title only, no body or labels
+
+  ```py
+  # TODO: This is a title
+  ```
+
+- Title, body, no labels
+
+  ```py
+  # TODO: This is a title
+  # This is in the TODO body
+  ```
+
+- Title, body and labels
+
+  ```py
+  # TODO[Enhancement]: This is a title
+  # This is in the TODO body
+  ```
+
+- Multiple labels
+  ```py
+  # TODO[Enhancement, Bug, Documentation]: This is a title
+  ```
+
+Valid separators include `,` `/` `#` `~` `\`
+
+### To run
+
+Pass the directory to look in for TODOs.
+
+```sh
+krypto <path-to-dir>
+```
+
+Krypto does not look in tests/ at the moment.
 
 ---
 

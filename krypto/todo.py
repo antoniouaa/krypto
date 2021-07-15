@@ -1,6 +1,15 @@
-from dataclasses import dataclass
+import re
+from dataclasses import dataclass, field
 from typing import List, Tuple
 import pathlib
+
+TODO_PREFIX = "# TODO"
+TODO_PREFIX_BODY = "#"
+PATTERN = r"# TODO(\[(.+)\])?:(.*)"
+
+
+class TODOError(Exception):
+    ...
 
 
 @dataclass
@@ -9,11 +18,25 @@ class Todo:
     body: str
     line_no: int
     origin: pathlib.Path
+    labels: List[str] = field(default_factory=list)
 
     def __str__(self) -> str:
-        return (
-            f"TODO:\n{self.title}:\n{self.body}\nIn {self.origin} - line {self.line_no}"
-        )
+        _labels = ""
+        if self.labels:
+            _labels = "[" + ", ".join(self.labels) + "]"
+        return f"TODO:\n{self.title} {_labels}:\n{self.body}\nIn {self.origin} - line {self.line_no}"
+
+
+def extract_title_info(pattern: str, title_line: str) -> Tuple[str, List[str]]:
+    match = re.search(pattern, title_line)
+    if match is None:
+        return []
+    _, labels, title = match.groups()
+    title = title.strip()
+    if labels:
+        labels = labels.split(",")
+        return title, [label.strip() for label in labels]
+    return title, []
 
 
 def process_raw_todo(todo_lines: List[Tuple[int, str]], path: str = __file__) -> Todo:
@@ -22,8 +45,10 @@ def process_raw_todo(todo_lines: List[Tuple[int, str]], path: str = __file__) ->
         body = " ".join([line[2:] for _, line in todo_lines[1:]])
     else:
         body = ""
-    title = title[len("# TODO:") :].strip()
-    return Todo(title=title, body=body, line_no=line_no, origin=path)
+    title, labels = extract_title_info(PATTERN, title)
+    if not title:
+        raise TODOError("TODOs require a title")
+    return Todo(title=title, body=body, line_no=line_no, origin=path, labels=labels)
 
 
 def parse(raw_source: str, path: str = __file__) -> List[Todo]:
@@ -38,18 +63,18 @@ def parse(raw_source: str, path: str = __file__) -> List[Todo]:
     possible = []
     start = False
     for index, line in enumerate(normalised_lines, start=1):
-        if not start and line.startswith("# TODO:"):
+        if not start and line.startswith(TODO_PREFIX):
             start = True
             possible.append((index, line))
-        elif start and line.startswith("# TODO:"):
+        elif start and line.startswith(TODO_PREFIX):
             start = False
             todo = process_raw_todo(possible)
             result.append(todo)
             todo = process_raw_todo([(index, line)])
             result.append(todo)
-        elif start and line.startswith("#"):
+        elif start and line.startswith(TODO_PREFIX_BODY):
             possible.append((index, line))
-        elif start and not line.startswith("#"):
+        elif start and not line.startswith(TODO_PREFIX_BODY):
             start = False
             todo = process_raw_todo(possible, path)
             result.append(todo)

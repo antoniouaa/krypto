@@ -11,14 +11,14 @@ __version__ = "0.1.0"
 from krypto.todo import parse
 from krypto.github import create_issues
 
-# TODO: Make config file
+# TODO[Enhancement]: Make config file
 # Sometimes you might wanna have TODOs in your tests.
 # Right now krypto will completely ignore any file with the
 # substring "test" in the path. I would want to be able to
 # configure this behaviour.
 
 
-# TODO: Allow for different standard labels to be attached to the issues
+# TODO[Enhancement]: Allow for different standard labels to be attached to the issues
 # Mayhap I would like to assign a todo certain labels like `Enhancement`
 # Possible syntax `# Enhancement: title here`
 # or maybe `# TODO[Enhancement]: title here`

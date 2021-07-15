@@ -1,9 +1,9 @@
-name: Lint with Black
+name: Run testcases
 
 on: [push, pull_request]
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo
@@ -14,8 +14,11 @@ jobs:
         with:
           python-version: 3.7
 
-      - name: Checkout black and run it
-        uses: psf/black@stable
-        with:
-          options: "--check --verbose"
-          src: "./krypto"
+      - name: Install poetry
+        uses: nok/install-poetry@latest
+
+      - name: Install dependencies
+        uses: poetry install
+
+      - name: Run the tests
+        run: poetry run task test -vvv

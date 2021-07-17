@@ -12,7 +12,7 @@ from krypto.github import get_basename, make_requests
 class IssueRunner:
     def __init__(self, path: str, cwd: str, config_file: str):
         self.cwd = cwd
-        self.config = Config(cwd, config_file).parse()
+        self.config = Config(config_file).parse()
         self.todos = gather_todos(path, config=self.config)
         username, repository = get_basename()
         self.config["username"] = username

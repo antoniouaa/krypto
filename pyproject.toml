@@ -27,10 +27,10 @@ launch = { cmd = "python -m krypto", help = "Create TODOs from your project"}
 test = { cmd = "pytest -vvv --cov=krypto", help = "Run all the tests"}
 
 # Example config
-[tool.krypto]
-prefix = "TODO"
-include = "tests"
-attach-issue = true
+# [tool.krypto]
+# prefix = "TODO"
+# include = "tests"
+# attach-issue = true
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

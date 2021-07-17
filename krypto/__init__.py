@@ -16,7 +16,7 @@ from krypto.github import main
 # Sometimes you might wanna have TODOs in your tests.
 # Right now krypto will completely ignore any file with the
 # substring "test" in the path. I would want to be able to
-# configure this behaviour.
+# configure this behaviour. Perhaps read from pyproject.toml?
 
 # TODO[Enhancement, Bug]: Allow for different standard labels to be attached to the issues
 # Mayhap I would like to assign a todo certain labels like `Enhancement`
@@ -30,9 +30,7 @@ from krypto.github import main
 # the script manually
 
 
-@click.command()
-@click.argument("path")
-def run(path):
+def gather_todos(path: str):
     todos = []
     for file in pathlib.Path(path).glob("**/*py"):
         if "test" not in str(file):
@@ -40,6 +38,13 @@ def run(path):
                 lst = parse(f.read(), file)
                 if lst:
                     todos.extend(lst)
+    return todos
+
+
+@click.command()
+@click.argument("path")
+def run(path):
+    todos = gather_todos(path)
 
     successful, failed = main(token, todos)
     click.echo("Finished creating issues!")

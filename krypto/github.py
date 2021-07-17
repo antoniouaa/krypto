@@ -67,7 +67,6 @@ def filter_issues(
     issue_state: dict = ALL_ISSUES,
 ) -> List[Todo]:
     response = requests.get(url, headers=headers, params=issue_state)
-    print(response.request.url)
     existing = {
         issue["title"].lower(): issue
         for issue in response.json()

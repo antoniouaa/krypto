@@ -1,11 +1,10 @@
-import os
+import shlex
 import pathlib
 import platform
 import subprocess
 from typing import List, Tuple
 
 import requests
-from requests.api import head
 
 from krypto.todo import Todo
 
@@ -19,10 +18,12 @@ def get_basename() -> str:
     plat = platform.system()
     if plat == "Windows":
         basename = subprocess.run(
-            ["powershell.exe", "git remote get-url origin"], capture_output=True
+            shlex.split("powershell.exe git remote get-url origin"), capture_output=True
         )
     else:
-        basename = subprocess.run(["git remote get-url origin"], capture_output=True)
+        basename = subprocess.run(
+            shlex.split("git remote get-url origin"), capture_output=True
+        )
     path = pathlib.Path(basename.stdout.decode().strip()[: -len(".git")])
     username, repo_name = path.parts[-2:]
     return username, repo_name

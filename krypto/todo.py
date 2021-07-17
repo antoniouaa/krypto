@@ -64,8 +64,12 @@ def process_raw_todo(todo_lines: List[Tuple[int, str]], path: str = __file__) ->
     return Todo(title=title, body=body, line_no=line_no, origin=path, labels=labels)
 
 
-def attach_issue_to_todo(issue_no: int) -> None:
-    ...
+def attach_issue_to_todo(todo: Todo, url: str) -> None:
+    with open(todo.origin) as f:
+        lines = f.readlines()
+    lines.insert(todo.issue_no - 1, f"Related Issue: {todo.issue_no}")
+    with open(todo.origin, "w") as f:
+        f.write(lines)
 
 
 def parse(raw_source: str, path: str = __file__) -> List[Todo]:

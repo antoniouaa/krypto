@@ -116,7 +116,10 @@ def make_requests(
                 issue_no=todo.issue_no,
             )
         if config["attach-issue"]:
-            attach_issue_to_todo(todo.issue_no)
+            issue_link = (
+                f"https://github.com/{username}/{repository}/issues/{todo.issue_no}"
+            )
+            attach_issue_to_todo(todo, issue_link)
         if success:
             successful.append(title)
         else:

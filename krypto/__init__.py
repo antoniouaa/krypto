@@ -1,15 +1,12 @@
 import os
-import pathlib
 
 __version__ = "0.1.0"
-
-import click
 
 token = os.getenv("TOKEN_GITHUB")
 assert token is not None
 
-from krypto.todo import parse
-from krypto.github import main
+
+from krypto.cli import run as run
 
 
 # TODO[Enhancement]: Make config file
@@ -24,35 +21,7 @@ from krypto.github import main
 # or maybe `# TODO[Enhancement]: title here`
 # Labels are overwritten right now instead of extended
 
-# TODO: Possible creation of pre-push git hook
+# TODO[Enhancement]: Possible creation of pre-push git hook
 # Think about making this into a git script to
 # hook into the pre-push action instead of having to run
 # the script manually
-
-
-def gather_todos(path: str):
-    todos = []
-    for file in pathlib.Path(path).glob("**/*py"):
-        if "test" not in str(file):
-            with open(file) as f:
-                lst = parse(f.read(), file)
-                if lst:
-                    todos.extend(lst)
-    return todos
-
-
-@click.command()
-@click.argument("path")
-def run(path):
-    todos = gather_todos(path)
-
-    successful, failed = main(token, todos)
-    click.echo("Finished creating issues!")
-    if successful:
-        click.echo("\nIssues successfully created/updated:")
-        for title in successful:
-            click.echo(f"\t- {title}")
-    if failed:
-        click.echo("\nSome issues have failed:")
-        for title in failed:
-            click.echo(f"\t- {title}")

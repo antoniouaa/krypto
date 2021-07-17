@@ -9,6 +9,7 @@ license = "MIT"
 python = "^3.7"
 requests = "^2.26.0"
 click = "^8.0.1"
+tomli = "^1.0.4"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
@@ -23,7 +24,13 @@ krypto = "krypto:run"
 
 [tool.taskipy.tasks]
 launch = { cmd = "python -m krypto", help = "Create TODOs from your project"}
-test = { cmd = "pytest -vvv", help = "Run all the tests"}
+test = { cmd = "pytest -vvv --cov=krypto", help = "Run all the tests"}
+
+# Example config
+[tool.krypto]
+prefix = "TODO"
+include = "tests"
+append-issue-number = true
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

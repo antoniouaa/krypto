@@ -77,24 +77,29 @@ def filter_issues(
         title = todo.title.lower()
         if title in existing:
             todo.issue_no = existing[title]["number"]
+            labels = [label["name"] for label in existing[title]["labels"]]
+            todo.labels = list(set(todo.labels + labels))
             filtered.append(todo)
         else:
             filtered.append(todo)
     return filtered
 
 
-def main(token: str, todos: List[Todo]) -> Tuple[List[str], List[str]]:
-    username, repo_name = get_basename()
-    url = construct_url(username, repo_name)
+def make_requests(
+    token: str, todos: List[Todo], config=dict
+) -> Tuple[List[str], List[str]]:
+    username = config["username"]
+    repository = config["repository"]
+    url = construct_url(username, repository)
     print(f"Posting to: {url}\n")
+
     successful = []
     failed = []
-
     headers = {**ACCEPT, "Authorization": f"token {token}"}
     todos = filter_issues(url, headers, todos, issue_state=ALL_ISSUES)
 
     for todo in todos:
-        json = prepare_body(todo, username, repo_name)
+        json = prepare_body(todo, username, repository)
         if not todo.issue_no:
             title, success = post_issue(
                 url,

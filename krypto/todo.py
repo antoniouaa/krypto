@@ -29,6 +29,17 @@ class Todo:
         return f"TODO:\n{self.title} {_labels}:\n{self.body}\nIn {self.origin} - line {self.line_no}"
 
 
+def gather_todos(path: str, config: dict) -> List[Todo]:
+    todos = []
+    for file in pathlib.Path(path).glob("**/*.py"):
+        if "test" not in str(file):
+            with open(file) as f:
+                lst = parse(f.read(), file)
+                if lst:
+                    todos.extend(lst)
+    return todos
+
+
 def extract_title_info(pattern: str, title_line: str) -> Tuple[str, List[str]]:
     match = re.search(pattern, title_line)
     if match is None:
@@ -37,7 +48,7 @@ def extract_title_info(pattern: str, title_line: str) -> Tuple[str, List[str]]:
     title = title.strip()
     if labels:
         labels = re.split(SEPARATORS, labels)
-        return title, [label.strip() for label in labels]
+        return title, [label.strip().lower() for label in labels]
     return title, []
 
 

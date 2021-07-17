@@ -90,7 +90,7 @@ Valid separators include `,` `/` `#` `~` `\`
 
 Pass the directory to look in for TODOs.
 
-```sh
+```console
 krypto <path-to-dir>
 ```
 

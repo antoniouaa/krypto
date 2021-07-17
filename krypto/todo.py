@@ -20,6 +20,7 @@ class Todo:
     line_no: int
     origin: pathlib.Path
     labels: List[str] = field(default_factory=list)
+    issue_no: int = None
 
     def __str__(self) -> str:
         _labels = ""

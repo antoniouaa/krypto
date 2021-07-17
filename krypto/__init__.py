@@ -9,7 +9,7 @@ token = os.getenv("TOKEN_GITHUB")
 assert token is not None
 
 from krypto.todo import parse
-from krypto.github import create_issues
+from krypto.github import main
 
 
 # TODO[Enhancement]: Make config file
@@ -41,10 +41,13 @@ def run(path):
                 if lst:
                     todos.extend(lst)
 
-    failed = create_issues(todos, token=token)
-    if todos:
-        click.echo("Finished creating issues!")
+    successful, failed = main(token, todos)
+    click.echo("Finished creating issues!")
+    if successful:
+        click.echo("\nIssues successfully created/updated:")
+        for title in successful:
+            click.echo(f"\t- {title}")
     if failed:
-        click.echo("Some issues have failed")
-        for todo in failed:
-            click.echo(todo.title)
+        click.echo("\nSome issues have failed:")
+        for title in failed:
+            click.echo(f"\t- {title}")

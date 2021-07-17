@@ -2,14 +2,15 @@ import os
 import pathlib
 import platform
 import subprocess
-from typing import Dict, List
+from typing import List, Tuple
 
 import requests
 
 from krypto.todo import Todo
 
 BASE_URL = "https://api.github.com"
-HEADER = {"Accept": "application/vnd.github.v3+json"}
+ISSUES_URL = "/repos/{}/{}/issues"
+ACCEPT = {"Accept": "application/vnd.github.v3+json"}
 ALL_ISSUES = {"state": "all"}
 
 
@@ -24,12 +25,6 @@ def get_basename() -> str:
     path = pathlib.Path(basename.stdout.decode().strip()[: -len(".git")])
     username, repo_name = path.parts[-2:]
     return username, repo_name
-
-
-def get_issue(existing_issues: List[Dict[str, str]], title: str) -> Dict[str, str]:
-    for issue in existing_issues:
-        if issue["title"] == title:
-            return issue
 
 
 def prepare_body(todo: Todo, username: str, repo_name: str) -> dict:
@@ -48,40 +43,77 @@ def prepare_body(todo: Todo, username: str, repo_name: str) -> dict:
     }
 
 
-def create_issues(todos: List[Todo], token: str) -> int:
-    if not todos:
-        print("No todos to create!")
-        return
+def construct_url(username: str, repo_name: str) -> str:
+    return BASE_URL + ISSUES_URL.format(username, repo_name)
 
+
+def create_issue(session: requests.Session, url: str, json: dict) -> Tuple[str, bool]:
+    response = session.post(url, json=json)
+    return json["title"], response.status_code == 201
+
+
+def patch_issue(
+    session: requests.Session, url: str, json: dict, issue_no: int
+) -> Tuple[str, bool]:
+    url = f"{url}/{issue_no}"
+    response = session.patch(url, json=json)
+    return json["title"], response.status_code == 200
+
+
+def filter_issues(
+    session: requests.Session,
+    url: str,
+    todos: List[Todo],
+    issue_state: dict = ALL_ISSUES,
+) -> List[Todo]:
+    existing = session.get(url, params=issue_state).json()
+    existing = {
+        issue["title"].lower(): issue
+        for issue in existing
+        if issue["state"] != "closed"
+    }
+    filtered = []
+    for todo in todos:
+        title = todo.title.lower()
+        if title in existing:
+            todo.issue_no = existing[title]["number"]
+            filtered.append(todo)
+        else:
+            filtered.append(todo)
+    return filtered
+
+
+def main(token: str, todos: List[Todo]) -> Tuple[List[str], List[str]]:
     username, repo_name = get_basename()
-    url = f"{BASE_URL}/repos/{username}/{repo_name}/issues"
-    print(url)
+    url = construct_url(username, repo_name)
+    print(f"Posting to: {url}\n")
+    successful = []
     failed = []
-    print("Creating issues...\n")
-
     with requests.Session() as session:
         session.headers.update({"authorization": f"token {token}"})
-        session.headers.update(HEADER)
+        session.headers.update(ACCEPT)
+        todos = filter_issues(session, url, todos, issue_state=ALL_ISSUES)
 
-        existing_issues = session.get(url, params=ALL_ISSUES).json()
-        existing_titles = [issue["title"].lower() for issue in existing_issues]
         for todo in todos:
-            print(f"> Issue {todo.title}")
-            print(todo.origin)
-            body = prepare_body(todo, username, repo_name)
-            if todo.title.lower() not in existing_titles:
-                response = session.post(url, json=body)
+            json = prepare_body(todo, username, repo_name)
+            if not todo.issue_no:
+                title, success = create_issue(
+                    session,
+                    url=url,
+                    json=json,
+                )
             else:
-                issue = get_issue(existing_issues, todo.title)
-                response = session.patch(f"{url}/{issue['number']}", json=body)
-            if response.request.method == "POST" and response.status_code != 201:
-                print(f"Error: {response.json()['message']}")
-                failed.append(todo)
-                continue
-            number = response.json()["number"]
-            link = response.json()["url"]
-            print(f"Created: Issue#{number} at {link}\n")
-    return failed
+                title, success = patch_issue(
+                    session,
+                    url=url,
+                    json=json,
+                    issue_no=todo.issue_no,
+                )
+            if success:
+                successful.append(title)
+            else:
+                failed.append(title)
+    return successful, failed
 
 
 # TODO[Enhancement]: Add issue number to TODO in code

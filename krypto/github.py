@@ -86,11 +86,27 @@ def filter_issues(
     return filtered
 
 
+def determine_if_dry_and_send(dry, todo, config, url, headers, json):
+    username = config["username"]
+    repository = config["repository"]
+    if dry and todo.issue_no:
+        print(f"Patching todo {username}/{repository}#{todo.issue_no}")
+    elif dry and not todo.issue_no:
+        print(f"Posting todo {username}/{repository}#{todo.issue_no}")
+    elif not dry and todo.issue_no:
+        title, success = patch_issue(url, headers, json=json, issue_no=todo.issue_no)
+    else:
+        title, success, issue_no = post_issue(url, headers, json=json)
+        todo.issue_no = issue_no
+    return (title, success) if not dry else (todo.title, True)
+
+
 def make_requests(
     token: str, todos: List[Todo], config=dict
 ) -> Tuple[List[str], List[str]]:
     username = config["username"]
     repository = config["repository"]
+    dry = config["dry"]
     url = construct_url(username, repository)
     print(f"Posting to: {url}\n")
 
@@ -101,20 +117,14 @@ def make_requests(
 
     for todo in todos:
         json = prepare_body(todo, username, repository)
-        if not todo.issue_no:
-            title, success, issue_no = post_issue(
-                url,
-                headers,
-                json=json,
-            )
-            todo.issue_no = issue_no
-        else:
-            title, success = patch_issue(
-                url,
-                headers,
-                json=json,
-                issue_no=todo.issue_no,
-            )
+        title, success = determine_if_dry_and_send(
+            dry,
+            todo,
+            config,
+            url,
+            headers,
+            json,
+        )
         if config["attach-issue"]:
             issue_link = (
                 f"https://github.com/{username}/{repository}/issues/{todo.issue_no}"

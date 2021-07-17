@@ -10,9 +10,9 @@ from krypto.github import get_basename, make_requests
 
 
 class IssueRunner:
-    def __init__(self, path: str, cwd: str, config_file: str):
+    def __init__(self, path: str, cwd: str, config: dict):
         self.cwd = cwd
-        self.config = Config(config_file).parse()
+        self.config = config
         self.todos = gather_todos(path, config=self.config)
         username, repository = get_basename()
         self.config["username"] = username
@@ -28,8 +28,11 @@ class IssueRunner:
 @click.command()
 @click.argument("path")
 @click.option("--config", default="pyproject.toml", help="Configuration file")
-def run(path, config):
-    runner = IssueRunner(path, pathlib.Path.cwd(), config_file=config)
+@click.option("--dry", is_flag=True)
+def run(path, config, dry):
+    config = Config(config).parse()
+    config.update({"dry": dry})
+    runner = IssueRunner(path, pathlib.Path.cwd(), config=config)
 
     successful, failed = runner.run(token)
     click.echo("Finished creating issues!")

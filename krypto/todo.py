@@ -7,6 +7,7 @@ TODO_PREFIX = "# TODO"
 TODO_PREFIX_BODY = "#"
 SEPARATORS = r"[\s?,-/~#\\\s\s?]+"
 PATTERN = rf"# TODO(\[([a-zA-Z{SEPARATORS}]*)?\])?:(.*)"
+PATTERN = rf"# TODO(\[([a-zA-Z{SEPARATORS}]*)?\])?:([\d\w\s]*)(?:\s\-\s.*)?"
 
 
 class TODOError(Exception):
@@ -67,9 +68,12 @@ def process_raw_todo(todo_lines: List[Tuple[int, str]], path: str = __file__) ->
 def attach_issue_to_todo(todo: Todo, url: str) -> None:
     with open(todo.origin) as f:
         lines = f.readlines()
-    lines.insert(todo.issue_no - 1, f"Related Issue: {todo.issue_no}")
+    num = todo.line_no - 1
+    if lines[num].strip().endswith(str(todo.issue_no)):
+        return
+    lines[num] = f"{lines[num].rstrip()} - {url}\n"
     with open(todo.origin, "w") as f:
-        f.write(lines)
+        f.write("".join(lines))
 
 
 def parse(raw_source: str, path: str = __file__) -> List[Todo]:

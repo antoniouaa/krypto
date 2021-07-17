@@ -127,6 +127,6 @@ def make_requests(
     return successful, failed
 
 
-# TODO[Enhancement]: Add issue number to TODO in code
+# TODO[Enhancement]: Add issue number to TODO in code - https://github.com/antoniouaa/krypto/issues/22
 # It would be useful to have the assigned issue number from github
 # attached to the TODO in code so you can immediately identify the TODOs

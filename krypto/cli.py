@@ -66,6 +66,3 @@ def install():
         with open(hooks / "pre-push", "w") as hook:
             hook.write("#!/bin/sh\n")
             hook.write("krypto run .\n")
-
-
-cli()

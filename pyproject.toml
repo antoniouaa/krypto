@@ -19,12 +19,11 @@ pytest-cov = "^2.12.1"
 coveralls = "^3.1.0"
 responses = "^0.13.3"
 
-[tool.poetry.scripts]
-krypto = "krypto:cli"
-
 [tool.taskipy.tasks]
-launch = { cmd = "python -m krypto", help = "Create TODOs from your project"}
 test = { cmd = "pytest -vvv --cov=krypto", help = "Run all the tests"}
+
+# [tool.poetry.scripts]
+# krypto = "krypto:cli"
 
 # Example config
 # [tool.krypto]

@@ -25,8 +25,7 @@ jobs:
 
       - name: Run the tests
         run: |
-          git remote get-url origin
-          poetry run task test -vvv --cov=krypto
+          poetry run task test
           poetry run coveralls --service=github
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

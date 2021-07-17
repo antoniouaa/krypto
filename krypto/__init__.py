@@ -6,7 +6,7 @@ token = os.getenv("TOKEN_GITHUB")
 assert token is not None
 
 
-from krypto.cli import run as run
+from krypto.cli import cli as cli
 
 
 # TODO[Enhancement]: Make config file

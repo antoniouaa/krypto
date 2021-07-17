@@ -20,7 +20,7 @@ coveralls = "^3.1.0"
 responses = "^0.13.3"
 
 [tool.poetry.scripts]
-krypto = "krypto:run"
+krypto = "krypto:cli"
 
 [tool.taskipy.tasks]
 launch = { cmd = "python -m krypto", help = "Create TODOs from your project"}

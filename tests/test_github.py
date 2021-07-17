@@ -1,8 +1,15 @@
-import responses
 import requests
+import responses
 
-from krypto.github import prepare_body, get_basename
-from tests.conftest import username, repository, todo_from_json
+from krypto.github import (
+    construct_url,
+    post_issue,
+    prepare_body,
+    get_basename,
+    filter_issues,
+)
+
+from tests.conftest import username, repository, headers, todo_from_json
 
 
 def test_request_body_all_fields(sample_todo):
@@ -30,3 +37,26 @@ def test_basename():
 
     assert username == "antoniouaa"
     assert repo_name == "krypto"
+
+
+def test_construct_url():
+    url = construct_url(username, repository)
+
+    assert url == "https://api.github.com/repos/antoniouaa/krypto/issues"
+
+
+def test_filter_issues(sample_todo):
+    url = "https://api.github.com/repos/antoniouaa/krypto/issues"
+    assert url == "https://api.github.com/repos/antoniouaa/krypto/issues"
+
+    with responses.RequestsMock() as rsps:
+        rsps.add(
+            responses.GET,
+            "https://api.github.com/repos/antoniouaa/krypto/issues?state=all",
+            json=todo_from_json,
+            status=200,
+        )
+        # response = requests.get(url, headers=headers)
+        response = filter_issues(url, headers=headers, todos=[sample_todo])
+
+        assert response == [sample_todo]

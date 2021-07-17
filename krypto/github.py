@@ -5,6 +5,7 @@ import subprocess
 from typing import List, Tuple
 
 import requests
+from requests.api import head
 
 from krypto.todo import Todo
 
@@ -47,29 +48,28 @@ def construct_url(username: str, repo_name: str) -> str:
     return BASE_URL + ISSUES_URL.format(username, repo_name)
 
 
-def create_issue(session: requests.Session, url: str, json: dict) -> Tuple[str, bool]:
-    response = session.post(url, json=json)
+def post_issue(url: str, headers: dict, json: dict) -> Tuple[str, bool]:
+    response = requests.post(url, headers=headers, json=json)
     return json["title"], response.status_code == 201
 
 
-def patch_issue(
-    session: requests.Session, url: str, json: dict, issue_no: int
-) -> Tuple[str, bool]:
+def patch_issue(url: str, headers: dict, json: dict, issue_no: int) -> Tuple[str, bool]:
     url = f"{url}/{issue_no}"
-    response = session.patch(url, json=json)
+    response = requests.patch(url, headers=headers, json=json)
     return json["title"], response.status_code == 200
 
 
 def filter_issues(
-    session: requests.Session,
     url: str,
+    headers: dict,
     todos: List[Todo],
     issue_state: dict = ALL_ISSUES,
 ) -> List[Todo]:
-    existing = session.get(url, params=issue_state).json()
+    response = requests.get(url, headers=headers, params=issue_state)
+    print(response.request.url)
     existing = {
         issue["title"].lower(): issue
-        for issue in existing
+        for issue in response.json()
         if issue["state"] != "closed"
     }
     filtered = []
@@ -89,30 +89,29 @@ def main(token: str, todos: List[Todo]) -> Tuple[List[str], List[str]]:
     print(f"Posting to: {url}\n")
     successful = []
     failed = []
-    with requests.Session() as session:
-        session.headers.update({"authorization": f"token {token}"})
-        session.headers.update(ACCEPT)
-        todos = filter_issues(session, url, todos, issue_state=ALL_ISSUES)
 
-        for todo in todos:
-            json = prepare_body(todo, username, repo_name)
-            if not todo.issue_no:
-                title, success = create_issue(
-                    session,
-                    url=url,
-                    json=json,
-                )
-            else:
-                title, success = patch_issue(
-                    session,
-                    url=url,
-                    json=json,
-                    issue_no=todo.issue_no,
-                )
-            if success:
-                successful.append(title)
-            else:
-                failed.append(title)
+    headers = {**ACCEPT, "Authorization": f"token {token}"}
+    todos = filter_issues(url, headers, todos, issue_state=ALL_ISSUES)
+
+    for todo in todos:
+        json = prepare_body(todo, username, repo_name)
+        if not todo.issue_no:
+            title, success = post_issue(
+                url,
+                headers,
+                json=json,
+            )
+        else:
+            title, success = patch_issue(
+                url,
+                headers,
+                json=json,
+                issue_no=todo.issue_no,
+            )
+        if success:
+            successful.append(title)
+        else:
+            failed.append(title)
     return successful, failed
 
 

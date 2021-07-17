@@ -6,8 +6,8 @@ from dataclasses import dataclass, field
 TODO_PREFIX = "# TODO"
 TODO_PREFIX_BODY = "#"
 SEPARATORS = r"[\s?,-/~#\\\s\s?]+"
-PATTERN = rf"# TODO(\[([a-zA-Z{SEPARATORS}]*)?\])?:(.*)"
-PATTERN = rf"# TODO(\[([a-zA-Z{SEPARATORS}]*)?\])?:([\d\w\s]*)(?:\s\-\s.*)?"
+# PATTERN = rf"# TODO(\[([a-zA-Z{SEPARATORS}]*)?\])?:(.*)"
+PATTERN = rf"# TODO(\[([a-zA-Z{SEPARATORS}]*)?\])?:([\d\w\s\-]*)(?:\s\@\s.*)?"
 
 
 class TODOError(Exception):
@@ -71,7 +71,7 @@ def attach_issue_to_todo(todo: Todo, url: str) -> None:
     num = todo.line_no - 1
     if lines[num].strip().endswith(str(todo.issue_no)):
         return
-    lines[num] = f"{lines[num].rstrip()} - {url}\n"
+    lines[num] = f"{lines[num].rstrip()} @{url}\n"
     with open(todo.origin, "w") as f:
         f.write("".join(lines))
 

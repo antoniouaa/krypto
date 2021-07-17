@@ -9,7 +9,7 @@ from krypto.todo import Todo
 
 username = "antoniouaa"
 repository = "krypto"
-
+url = "https://api.github.com/repos/antoniouaa/krypto/issues"
 
 todo_from_json = [
     {

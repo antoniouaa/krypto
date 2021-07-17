@@ -24,7 +24,6 @@ def get_basename() -> Tuple[str, str]:
         basename = subprocess.run(
             shlex.split("git remote get-url origin"), capture_output=True
         )
-    # path = pathlib.Path(basename.stdout.decode().strip()[: -len(".git")])
     path = pathlib.Path(basename.stdout.decode().strip(" \n.git"))
     *_, username, repository = path.parts
     return username, repository

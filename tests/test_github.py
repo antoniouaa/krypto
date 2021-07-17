@@ -3,13 +3,14 @@ import responses
 
 from krypto.github import (
     construct_url,
+    patch_issue,
     post_issue,
     prepare_body,
     get_basename,
     filter_issues,
 )
 
-from tests.conftest import username, repository, headers, todo_from_json
+from tests.conftest import username, repository, headers, todo_from_json, url
 
 
 def test_request_body_all_fields(sample_todo):
@@ -47,17 +48,40 @@ def test_construct_url():
 
 
 def test_filter_issues(sample_todo):
-    url = "https://api.github.com/repos/antoniouaa/krypto/issues"
-    assert url == "https://api.github.com/repos/antoniouaa/krypto/issues"
-
-    with responses.RequestsMock() as rsps:
-        rsps.add(
+    with responses.RequestsMock() as mock_requests:
+        mock_requests.add(
             responses.GET,
-            "https://api.github.com/repos/antoniouaa/krypto/issues?state=all",
+            f"{url}?state=all",
             json=todo_from_json,
             status=200,
         )
-        # response = requests.get(url, headers=headers)
         response = filter_issues(url, headers=headers, todos=[sample_todo])
 
         assert response == [sample_todo]
+
+
+def test_post_issue(sample_todo):
+    json = prepare_body(sample_todo, username=username, repository=repository)
+    with responses.RequestsMock() as mock_requests:
+        mock_requests.add(
+            responses.POST,
+            url,
+            json=json,
+            status=201,
+        )
+        response = post_issue(url, headers=headers, json=json)
+        assert response == (json["title"], True)
+
+
+def test_patch_issue(sample_todo):
+    json = prepare_body(sample_todo, username=username, repository=repository)
+    issue_no = 1
+    with responses.RequestsMock() as mock_requests:
+        mock_requests.add(
+            responses.PATCH,
+            f"{url}/{issue_no}",
+            json=json,
+            status=200,
+        )
+        response = patch_issue(url, headers=headers, json=json, issue_no=issue_no)
+        assert response == (json["title"], True)

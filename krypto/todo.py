@@ -1,7 +1,7 @@
 import re
-from dataclasses import dataclass, field
-from typing import List, Tuple
 import pathlib
+from typing import List, Tuple
+from dataclasses import dataclass, field
 
 TODO_PREFIX = "# TODO"
 TODO_PREFIX_BODY = "#"
@@ -48,7 +48,7 @@ def extract_title_info(pattern: str, title_line: str) -> Tuple[str, List[str]]:
     title = title.strip()
     if labels:
         labels = re.split(SEPARATORS, labels)
-        return title, [label.strip().lower() for label in labels]
+        return title, [label.strip().capitalize() for label in labels]
     return title, []
 
 
@@ -62,6 +62,10 @@ def process_raw_todo(todo_lines: List[Tuple[int, str]], path: str = __file__) ->
     if not title:
         raise TODOError("TODOs require a title")
     return Todo(title=title, body=body, line_no=line_no, origin=path, labels=labels)
+
+
+def attach_issue_to_todo(issue_no: int) -> None:
+    ...
 
 
 def parse(raw_source: str, path: str = __file__) -> List[Todo]:

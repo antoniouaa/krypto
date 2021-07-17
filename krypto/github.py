@@ -6,7 +6,7 @@ from typing import List, Tuple
 
 import requests
 
-from krypto.todo import Todo
+from krypto.todo import Todo, attach_issue_to_todo
 
 BASE_URL = "https://api.github.com"
 ISSUES_URL = "/repos/{}/{}/issues"
@@ -51,7 +51,8 @@ def construct_url(username: str, repository: str) -> str:
 
 def post_issue(url: str, headers: dict, json: dict) -> Tuple[str, bool]:
     response = requests.post(url, headers=headers, json=json)
-    return json["title"], response.status_code == 201
+    issue_no = response.json()["number"]
+    return json["title"], response.status_code == 201, issue_no
 
 
 def patch_issue(url: str, headers: dict, json: dict, issue_no: int) -> Tuple[str, bool]:
@@ -101,11 +102,12 @@ def make_requests(
     for todo in todos:
         json = prepare_body(todo, username, repository)
         if not todo.issue_no:
-            title, success = post_issue(
+            title, success, issue_no = post_issue(
                 url,
                 headers,
                 json=json,
             )
+            todo.issue_no = issue_no
         else:
             title, success = patch_issue(
                 url,
@@ -113,6 +115,8 @@ def make_requests(
                 json=json,
                 issue_no=todo.issue_no,
             )
+        if config["attach-issue"]:
+            attach_issue_to_todo(todo.issue_no)
         if success:
             successful.append(title)
         else:
@@ -122,4 +126,4 @@ def make_requests(
 
 # TODO[Enhancement]: Add issue number to TODO in code
 # It would be useful to have the assigned issue number from github
-# attached to the TODO in code so you can immediateyl identify the TODOs
+# attached to the TODO in code so you can immediately identify the TODOs

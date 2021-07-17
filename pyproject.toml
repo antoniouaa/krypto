@@ -30,7 +30,7 @@ test = { cmd = "pytest -vvv --cov=krypto", help = "Run all the tests"}
 [tool.krypto]
 prefix = "TODO"
 include = "tests"
-append-issue-number = true
+attach-issue = true
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

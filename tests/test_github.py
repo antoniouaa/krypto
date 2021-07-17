@@ -1,4 +1,3 @@
-import requests
 import responses
 
 from krypto.github import (
@@ -62,15 +61,16 @@ def test_filter_issues(sample_todo):
 
 def test_post_issue(sample_todo):
     json = prepare_body(sample_todo, username=username, repository=repository)
+    response_json = {**json, "number": 1}
     with responses.RequestsMock() as mock_requests:
         mock_requests.add(
             responses.POST,
             url,
-            json=json,
+            json=response_json,
             status=201,
         )
         response = post_issue(url, headers=headers, json=json)
-        assert response == (json["title"], True)
+        assert response == (json["title"], True, 1)
 
 
 def test_patch_issue(sample_todo):

@@ -13,7 +13,7 @@ from tests.conftest import username, repository, headers, todo_from_json
 
 
 def test_request_body_all_fields(sample_todo):
-    body = prepare_body(sample_todo, username=username, repo_name=repository)
+    body = prepare_body(sample_todo, username=username, repository=repository)
     assert isinstance(body, dict)
     assert body["title"] == sample_todo.title
     assert body["labels"] == sample_todo.labels
@@ -22,7 +22,7 @@ def test_request_body_all_fields(sample_todo):
 
 def test_request_body_no_body(sample_todo):
     sample_todo.body = ""
-    body = prepare_body(sample_todo, username=username, repo_name=repository)
+    body = prepare_body(sample_todo, username=username, repository=repository)
     assert isinstance(body, dict)
     assert body["title"] == sample_todo.title
     assert body["labels"] == sample_todo.labels
@@ -33,10 +33,11 @@ def test_request_body_no_body(sample_todo):
 
 
 def test_basename():
-    username, repo_name = get_basename()
+    username, repository = get_basename()
+    print(get_basename())
 
     assert username == "antoniouaa"
-    assert repo_name == "krypto"
+    assert repository == "krypto"
 
 
 def test_construct_url():

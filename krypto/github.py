@@ -14,7 +14,7 @@ ACCEPT = {"Accept": "application/vnd.github.v3+json"}
 ALL_ISSUES = {"state": "all"}
 
 
-def get_basename() -> str:
+def get_basename() -> Tuple[str, str]:
     plat = platform.system()
     if plat == "Windows":
         basename = subprocess.run(
@@ -25,11 +25,11 @@ def get_basename() -> str:
             shlex.split("git remote get-url origin"), capture_output=True
         )
     path = pathlib.Path(basename.stdout.decode().strip()[: -len(".git")])
-    username, repo_name = path.parts[-2:]
-    return username, repo_name
+    *_, username, repository = path.parts
+    return username, repository
 
 
-def prepare_body(todo: Todo, username: str, repo_name: str) -> dict:
+def prepare_body(todo: Todo, username: str, repository: str) -> dict:
     if todo.body:
         issue_body = f"{todo.body}"
     else:
@@ -40,13 +40,13 @@ def prepare_body(todo: Todo, username: str, repo_name: str) -> dict:
     return {
         "title": todo.title,
         "body": issue_body
-        + f"\n\nLine: {todo.line_no} in [`{todo.origin}`](https://github.com/{username}/{repo_name}/blob/master/{normalised_origin}#L{todo.line_no})",
+        + f"\n\nLine: {todo.line_no} in [`{todo.origin}`](https://github.com/{username}/{repository}/blob/master/{normalised_origin}#L{todo.line_no})",
         "labels": todo.labels,
     }
 
 
-def construct_url(username: str, repo_name: str) -> str:
-    return BASE_URL + ISSUES_URL.format(username, repo_name)
+def construct_url(username: str, repository: str) -> str:
+    return BASE_URL + ISSUES_URL.format(username, repository)
 
 
 def post_issue(url: str, headers: dict, json: dict) -> Tuple[str, bool]:

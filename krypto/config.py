@@ -13,7 +13,7 @@ class Config:
         self.config_file = config
 
     def parse(self) -> dict:
-        if self.config_file == "pyproject.toml":
+        if "pyproject.toml" in str(self.config_file):
             try:
                 with open(self.config_file) as config:
                     found = tomli.load(config)["tool"]["krypto"]

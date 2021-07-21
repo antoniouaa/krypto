@@ -29,7 +29,7 @@ class Todo:
         return f"TODO:\n{self.title} {_labels}:\n{self.body}\nIn {self.origin} - line {self.line_no}"
 
 
-def gather_todos(path: str, config: dict) -> List[Todo]:
+def gather_todos(path: str) -> List[Todo]:
     todos = []
     for file in pathlib.Path(path).glob("**/*.py"):
         if "test" not in str(file):

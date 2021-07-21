@@ -20,3 +20,4 @@ dist
 
 # Testing and coverage
 .coverage
+htmlcov

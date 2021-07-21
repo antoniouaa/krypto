@@ -13,13 +13,13 @@ class IssueRunner:
     def __init__(self, path: str, cwd: str, config: dict):
         self.cwd = cwd
         self.config = config
-        self.todos = gather_todos(path, config=self.config)
+        self.todos = gather_todos(path)
         username, repository = get_basename()
         self.config["username"] = username
         self.config["repository"] = repository
 
     def __str__(self):
-        return f"Runner: cwd@{self.cwd}\n{len(self.todos)} todos"
+        return f"Runner: cwd@{self.cwd.parts[-1]}\n{len(self.todos)} todos"
 
     def run(self, token: str) -> Tuple[List[str], List[str]]:
         return make_requests(token, todos=self.todos, config=self.config)

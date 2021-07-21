@@ -122,11 +122,6 @@ def make_requests(
             headers,
             json,
         )
-        if config["attach-issue"]:
-            issue_link = (
-                f"https://github.com/{username}/{repository}/issues/{todo.issue_no}"
-            )
-            attach_issue_to_todo(todo, issue_link)
         if success:
             successful.append(title)
         else:

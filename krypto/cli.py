@@ -5,7 +5,7 @@ import click
 
 from krypto import token
 from krypto.config import Config
-from krypto.todo import gather_todos
+from krypto.todo import gather_todos, attach_issue_to_todo
 from krypto.github import get_basename, make_requests
 
 
@@ -24,6 +24,16 @@ class IssueRunner:
     def run(self, token: str) -> Tuple[List[str], List[str]]:
         return make_requests(token, todos=self.todos, config=self.config)
 
+    def add_links(self):
+        username = self.config["username"]
+        repository = self.config["repository"]
+        for todo in self.todos:
+            if self.config["attach-issue"]:
+                issue_link = (
+                    f"https://github.com/{username}/{repository}/issues/{todo.issue_no}"
+                )
+                attach_issue_to_todo(todo, issue_link)
+
 
 @click.group()
 def cli():
@@ -39,10 +49,6 @@ def run(path, config, dry):
     config.update({"dry": dry})
     runner = IssueRunner(path, Path.cwd(), config=config)
 
-    click.echo(
-        "attach-issue setting detected\nWill attempt to attach a link to the GitHub issue after request."
-    )
-
     successful, failed = runner.run(token)
     click.echo("Finished creating issues!")
     if successful:
@@ -53,7 +59,12 @@ def run(path, config, dry):
         click.echo("\nSome issues have failed:")
         for title in failed:
             click.echo(f"\t- {title}")
-    click.echo("\n")
+
+    click.echo(
+        "\nattach-issue setting detected\nWill attempt to attach a link to the GitHub issue after request.\n"
+    )
+    runner.add_links()
+    click.echo("Finished!\n")
 
 
 @cli.command("install")

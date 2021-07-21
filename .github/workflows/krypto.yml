@@ -9,6 +9,6 @@ jobs:
     steps:
       - name: Checkout krypto
         id: checkout
-        uses: antoniouaa/krypto@v1
+        uses: antoniouaa/krypto@v0.0.1
         with:
           dir: "."

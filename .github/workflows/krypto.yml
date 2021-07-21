@@ -1,0 +1,12 @@
+on: [push]
+
+jobs:
+  krypto:
+    runs-on: ubuntu-18.04
+    name: Run krypto
+    steps:
+      - name: Checkout krypto
+        id: checkout
+        uses: actions/krypto@v1
+        with:
+          dir: "."

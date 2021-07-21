@@ -3,11 +3,8 @@ description: "Create GitHub issues from comments programmatically"
 inputs:
   dir:
     description: "Directory to check for TODOs"
-    required: true
+    required: false
     default: "."
-# outputs:
-#   success:
-#     description: "Issues created successfully"
 run:
   using: "docker"
   image: "Dockerfile"

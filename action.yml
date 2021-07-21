@@ -1,6 +1,6 @@
 name: "Krypto"
 description: "Create GitHub issues from comments programmatically"
 
-run:
+runs:
   using: "docker"
   image: "Dockerfile"

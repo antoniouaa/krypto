@@ -1,0 +1,15 @@
+name: "Krypto"
+description: "Create GitHub issues from comments programmatically"
+inputs:
+  dir:
+    description: "Directory to check for TODOs"
+    required: true
+    default: "."
+# outputs:
+#   success:
+#     description: "Issues created successfully"
+run:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.dir }}

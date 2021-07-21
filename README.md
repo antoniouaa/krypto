@@ -98,4 +98,24 @@ Krypto does not look in tests/ at the moment.
 
 ---
 
+## GitHub Action
+
+This action runs Krypto on your code and creates issues on the repo on your behalf
+
+### Inputs
+
+### `dir`
+
+**Required** The path to the directory to scan for TODOs
+
+### Example usage
+
+```yaml
+uses: actions/krypto@v1
+with:
+  dir: "."
+```
+
+---
+
 Inspired by [tsoding/snitch](https://github.com/tsoding/snitch)

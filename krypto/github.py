@@ -68,19 +68,16 @@ def filter_issues(
     issue_state: dict = ALL_ISSUES,
 ) -> List[Todo]:
     response = requests.get(url, headers=headers, params=issue_state)
-    existing = {
-        issue["title"].lower(): issue
-        for issue in response.json()
-        if issue["state"] != "closed"
-    }
+    existing = {issue["title"].lower(): issue for issue in response.json()}
     filtered = []
     for todo in todos:
         title = todo.title.lower()
         if title in existing:
-            todo.issue_no = existing[title]["number"]
-            labels = [label["name"] for label in existing[title]["labels"]]
-            todo.labels = list(set(todo.labels + labels))
-            filtered.append(todo)
+            if existing[title]["state"] != "closed":
+                todo.issue_no = existing[title]["number"]
+                labels = [label["name"] for label in existing[title]["labels"]]
+                todo.labels = list(set(todo.labels + labels))
+                filtered.append(todo)
         else:
             filtered.append(todo)
     return filtered
@@ -137,12 +134,12 @@ def make_requests(
     return successful, failed
 
 
-# TODO: Refactor make_requests
+# TODO: Refactor make_requests @https://github.com/antoniouaa/krypto/issues/36
 # It doesnt make sense that a github related function handles
 # attaching links to TODOs in the code locally
 # This should be moved to the `krypto.todo` file instead
 
 
-# TODO[Enhancement]: Add issue number to TODO in code
+# TODO[Enhancement]: Add issue number to TODO in code @https://github.com/antoniouaa/krypto/issues/22
 # It would be useful to have the assigned issue number from github
 # attached to the TODO in code so you can immediately identify the TODOs

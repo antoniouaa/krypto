@@ -39,6 +39,10 @@ def run(path, config, dry):
     config.update({"dry": dry})
     runner = IssueRunner(path, Path.cwd(), config=config)
 
+    click.echo(
+        "attach-issue setting detected\nWill attempt to attach a link to the GitHub issue after request."
+    )
+
     successful, failed = runner.run(token)
     click.echo("Finished creating issues!")
     if successful:

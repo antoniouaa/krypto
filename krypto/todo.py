@@ -6,7 +6,6 @@ from dataclasses import dataclass, field
 TODO_PREFIX = "# TODO"
 TODO_PREFIX_BODY = "#"
 SEPARATORS = r"[\s?,-/~#\\\s\s?]+"
-# PATTERN = rf"# TODO(\[([a-zA-Z{SEPARATORS}]*)?\])?:(.*)"
 PATTERN = rf"# TODO(\[([a-zA-Z{SEPARATORS}]*)?\])?:([\d\w\s\-]*)(?:\s\@\s.*)?"
 
 

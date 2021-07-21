@@ -22,14 +22,14 @@ responses = "^0.13.3"
 [tool.taskipy.tasks]
 test = { cmd = "pytest -vvv --cov=krypto", help = "Run all the tests"}
 
-# [tool.poetry.scripts]
-# krypto = "krypto:cli"
+[tool.poetry.scripts]
+krypto = "krypto:cli"
 
 # Example config
-# [tool.krypto]
-# prefix = "TODO"
-# include = "tests"
-# attach-issue = true
+[tool.krypto]
+prefix = "TODO"
+include = "tests"
+attach-issue = true
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

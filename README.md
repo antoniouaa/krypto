@@ -8,7 +8,7 @@
 ![tests](https://github.com/antoniouaa/krypto/actions/workflows/test.yml/badge.svg)
 ![black](https://github.com/antoniouaa/krypto/actions/workflows/black.yml/badge.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Coverage Status](https://coveralls.io/repos/github/antoniouaa/krypto/badge.svg?branch=master)](https://coveralls.io/github/antoniouaa/krypto?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/antoniouaa/krypto/badge.svg?branch=master&service=github)](https://coveralls.io/github/antoniouaa/krypto?branch=master)
 
 <h2 style="font-size: 22px;">A neat little sidekick python script to create issues on your repo based on comments left in the code on your behalf</h2>
 

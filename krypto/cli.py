@@ -28,11 +28,10 @@ class IssueRunner:
         username = self.config["username"]
         repository = self.config["repository"]
         for todo in self.todos:
-            if self.config["attach-issue"]:
-                issue_link = (
-                    f"https://github.com/{username}/{repository}/issues/{todo.issue_no}"
-                )
-                attach_issue_to_todo(todo, issue_link)
+            issue_link = (
+                f"https://github.com/{username}/{repository}/issues/{todo.issue_no}"
+            )
+            attach_issue_to_todo(todo, issue_link)
 
 
 @click.group()
@@ -60,11 +59,13 @@ def run(path, config, dry):
         for title in failed:
             click.echo(f"\t- {title}")
 
-    click.echo(
-        "\nattach-issue setting detected\nWill attempt to attach a link to the GitHub issue after request.\n"
-    )
-    runner.add_links()
-    click.echo("Finished!\n")
+    if config["attach-issue"]:
+        click.echo(
+            "\nattach-issue setting detected\nWill attempt to attach a link to the GitHub issue after request."
+        )
+        runner.add_links()
+
+    click.echo("\nFinished!")
 
 
 @cli.command("install")

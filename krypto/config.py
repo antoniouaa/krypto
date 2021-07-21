@@ -16,7 +16,8 @@ class Config:
         if self.config_file == "pyproject.toml":
             try:
                 with open(self.config_file) as config:
-                    return tomli.load(config)["tool"]["krypto"]
+                    found = tomli.load(config)["tool"]["krypto"]
+                    return {**DEFAULTS, **found}
             except KeyError:
                 return DEFAULTS
         raise PyProjectNotFound("pyproject.toml selected but not found")

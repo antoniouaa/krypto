@@ -1,3 +1,5 @@
+name: Krypto
+
 on: [push]
 
 jobs:
@@ -7,6 +9,6 @@ jobs:
     steps:
       - name: Checkout krypto
         id: checkout
-        uses: actions/krypto@v1
+        uses: antoniouaa/krypto@v1
         with:
           dir: "."

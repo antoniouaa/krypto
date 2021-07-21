@@ -8,5 +8,3 @@ inputs:
 run:
   using: "docker"
   image: "Dockerfile"
-  args:
-    - ${{ inputs.dir }}

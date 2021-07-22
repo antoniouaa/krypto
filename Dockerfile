@@ -8,5 +8,4 @@ RUN poetry install
 # RUN poetry build
 # RUN pip install dist/krypto-0.1.0-py3-none-any.whl
 
-ENTRYPOINT [ "poetry" ]
-CMD ["run", "krypto", "run", "."]
+ENTRYPOINT [ "poetry", "run", "krypto", "run" ]

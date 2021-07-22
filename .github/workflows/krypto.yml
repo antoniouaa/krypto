@@ -8,3 +8,7 @@ jobs:
     steps:
       - name: Checkout krypto
         uses: antoniouaa/krypto@master
+        with:
+          directory: "."
+        env:
+          TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}

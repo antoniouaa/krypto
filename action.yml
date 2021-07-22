@@ -1,6 +1,13 @@
 name: "Krypto"
 description: "Create GitHub issues from comments programmatically"
-
+author: "antoniouaa"
+inputs:
+  directory:
+    description: The directory to look in for TODOs
+    required: true
+outputs:
+  output:
+    description: Krypto's output
 runs:
   using: "docker"
   image: "Dockerfile"

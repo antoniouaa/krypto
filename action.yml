@@ -1,0 +1,19 @@
+name: "Krypto"
+description: "Programmatically generate GitHub Issues from comments in code"
+author: "antoniouaa"
+
+inputs:
+  dir:
+    description: "Directory to search in"
+    required: true
+    default: "."
+
+outputs:
+  quantity:
+    description: "How many TODOs have been posted or patched"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.dir }}

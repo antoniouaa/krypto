@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: Generate issues
         id: launch
-        uses: antoniouaa/krypto@master
+        uses: antoniouaa/krypto@action
         with:
           dir: "."
         env:

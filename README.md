@@ -108,12 +108,20 @@ This action runs Krypto on your code and creates issues on the repo on your beha
 
 **Required** The path to the directory to scan for TODOs
 
+### Env
+
+### `TOKEN_GITHUB`
+
+**Required** A personal access token for github to use to authenticate the creation of issues on your repository
+
 ### Example usage
 
 ```yaml
-uses: actions/krypto@v1
+uses: antoniouaa/krypto@master
 with:
   dir: "."
+env:
+  TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ---

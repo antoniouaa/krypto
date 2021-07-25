@@ -39,9 +39,6 @@ def cli():
     ...
 
 
-# TODO: Test whether the action works
-
-
 @cli.command("run")
 @click.argument("path")
 @click.option("--config", default="pyproject.toml", help="Configuration file")

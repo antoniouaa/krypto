@@ -9,10 +9,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Check dir
-        run: |
-          pwd
-
       - name: Generate issues
         id: launch
         uses: antoniouaa/krypto@action

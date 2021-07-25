@@ -4,7 +4,6 @@ ENV TOKEN_GITHUB = $TOKEN_GITHUB
 ENV REPOINFO $GITHUB_REPOSITORY
 
 RUN apt-get -y update && apt-get -y upgrade
-
 RUN pip install poetry
 
 COPY . .

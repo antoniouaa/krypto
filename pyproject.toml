@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "krypto"
-version = "0.1.0"
+version = "1.0.0"
 description = "A python API that creates issues in your repos based on TODO: comments in your code"
 authors = ["antoniouaa <antoniouaa@hotmail.com>"]
 license = "MIT"

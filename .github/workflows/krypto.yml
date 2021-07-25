@@ -11,7 +11,7 @@ jobs:
 
       - name: Generate issues
         id: launch
-        uses: antoniouaa/krypto@action
+        uses: antoniouaa/krypto@master
         with:
           dir: "."
         env:

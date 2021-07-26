@@ -117,7 +117,7 @@ This action runs Krypto on your code and creates issues on the repo on your beha
 ### Example usage
 
 ```yaml
-uses: antoniouaa/krypto@master
+uses: antoniouaa/krypto@v1
 with:
   dir: "."
 env:

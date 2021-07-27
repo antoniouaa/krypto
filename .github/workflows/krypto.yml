@@ -23,3 +23,5 @@ jobs:
       - name: Output quantity
         run: |
           echo "${{steps.launch.outputs.quantity}} TODOs created"
+          pwd
+          ls -l

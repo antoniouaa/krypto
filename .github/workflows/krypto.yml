@@ -3,7 +3,10 @@ name: Krypto
 on:
   push:
     branches:
-      - action
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   generate:
@@ -14,7 +17,7 @@ jobs:
 
       - name: Generate issues
         id: launch
-        uses: antoniouaa/krypto@action
+        uses: antoniouaa/krypto@master
         with:
           dir: "."
         env:

@@ -14,7 +14,7 @@ jobs:
 
       - name: Generate issues
         id: launch
-        uses: antoniouaa/krypto@master
+        uses: antoniouaa/krypto@action
         with:
           dir: "."
         env:
@@ -23,5 +23,3 @@ jobs:
       - name: Output quantity
         run: |
           echo "${{steps.launch.outputs.quantity}} TODOs created"
-          pwd
-          ls -l

@@ -3,10 +3,7 @@ name: Krypto
 on:
   push:
     branches:
-      - master
-  pull_request:
-    branches:
-      - master
+      - action
 
 jobs:
   generate:

@@ -3,7 +3,10 @@
 echo "Test"
 echo "Running Krypto at dir $1"
 
-poetry install --no-dev
-poetry -V
+ls -lh
+ls -l ..
 
-poetry run krypto run .
+# poetry install --no-dev
+# poetry -V
+
+# poetry run krypto run .

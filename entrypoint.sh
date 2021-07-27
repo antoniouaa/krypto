@@ -5,5 +5,6 @@ echo "Running Krypto at dir $1"
 
 poetry install --no-dev
 poetry -V
+pip install .
 
 poetry run krypto run .

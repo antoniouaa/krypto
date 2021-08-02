@@ -94,8 +94,10 @@ def test_runner_requests(mock_requests, sample_todo):
 
 
 def test_click_run():
+    test_dir = pathlib.Path("./krypto/")
+
     runner = CliRunner()
-    result = runner.invoke(run, [".", "--dry"])
+    result = runner.invoke(run, [test_dir.name, "--dry"])
 
     assert result.exit_code == 0
     assert "Running in dry mode" in result.output

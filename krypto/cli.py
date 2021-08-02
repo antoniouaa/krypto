@@ -13,7 +13,7 @@ class IssueRunner:
     def __init__(self, path: str, cwd: str, config: dict):
         self.cwd = cwd
         self.config = config
-        self.todos = gather_todos(path)
+        self.todos = gather_todos(path, config=self.config)
         username, repository = get_basename()
         self.config["username"] = username
         self.config["repository"] = repository

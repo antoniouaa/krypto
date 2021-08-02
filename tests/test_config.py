@@ -9,6 +9,7 @@ def test_config(tmp_path):
     pyproject.write_text(
         """
 [tool.krypto]
+comment = "#"
 prefix = "TODO"
 include = "tests"
 attach-issue = false

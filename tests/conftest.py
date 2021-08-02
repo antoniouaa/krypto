@@ -7,6 +7,7 @@ import responses
 from krypto.todo import Todo
 
 sample_config = {
+    "comment": "#",
     "prefix": "TODO",
     "attach-issue": False,
     "include": "tests",

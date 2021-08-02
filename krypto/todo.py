@@ -58,7 +58,7 @@ def extract_title_info(pattern: str, title_line: str) -> Tuple[str, List[str]]:
 def process_raw_todo(todo_lines: List[Tuple[int, str]], path: str = __file__) -> Todo:
     line_no, title = todo_lines[0]
     if len(todo_lines) > 1:
-        body = " ".join([line[2:] for _, line in todo_lines[1:]])
+        body = " ".join([line[2:].strip() for _, line in todo_lines[1:]]).strip()
     else:
         body = ""
     title, labels = extract_title_info(PATTERN, title)
@@ -90,18 +90,26 @@ def parse(raw_source: str, path: str = __file__) -> List[Todo]:
     possible = []
     start = False
     for index, line in enumerate(normalised_lines, start=1):
-        if not start and (line.startswith(TODO_PREFIX) or line.startswith(TODO_PREFIX_JS)):
+        if not start and (
+            line.startswith(TODO_PREFIX) or line.startswith(TODO_PREFIX_JS)
+        ):
             start = True
             possible.append((index, line))
-        elif start and (line.startswith(TODO_PREFIX) or line.startswith(TODO_PREFIX_JS)):
+        elif start and (
+            line.startswith(TODO_PREFIX) or line.startswith(TODO_PREFIX_JS)
+        ):
             start = False
             todo = process_raw_todo(possible)
             result.append(todo)
             todo = process_raw_todo([(index, line)])
             result.append(todo)
-        elif start and (line.startswith(TODO_PREFIX_BODY) or line.startswith(TODO_PREFIX_BODY_JS)):
+        elif start and (
+            line.startswith(TODO_PREFIX_BODY) or line.startswith(TODO_PREFIX_BODY_JS)
+        ):
             possible.append((index, line))
-        elif start and not (line.startswith(TODO_PREFIX_BODY) or line.startswith(TODO_PREFIX_BODY_JS)):
+        elif start and not (
+            line.startswith(TODO_PREFIX_BODY) or line.startswith(TODO_PREFIX_BODY_JS)
+        ):
             start = False
             todo = process_raw_todo(possible, path)
             result.append(todo)

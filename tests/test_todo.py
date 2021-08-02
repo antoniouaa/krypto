@@ -66,3 +66,18 @@ def test_func(*args, **kwargs):
     todo = todos[0]
     assert todo.title == "Implement this function"
     assert todo.body == "This function should perform some task and return some output"
+
+
+def test_todo_slashes():
+    test_program = """
+const testFunc = () => {
+    // TODO: Implement this function
+    // This function should perform some task
+    // and return some output
+}
+"""
+    todos = parse(test_program)
+    assert len(todos) == 1
+    todo = todos[0]
+    assert todo.title == "Implement this function"
+    assert todo.body == "This function should perform some task and return some output"

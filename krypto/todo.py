@@ -9,7 +9,7 @@ SEPARATORS = r"[\s?,-/~#\\\s\s?]+"
 PATTERN = r"{}(\[([a-zA-Z{}]*)?\])?:([\d\w\s\-]*)(?:\s\@\s.*)?"
 
 
-# TODO[Enhancement]: add functionality for /* comments in js (will need to change how body is parsed) @https://github.com/antoniouaa/krypto/issues/44 @https://github.com/antoniouaa/krypto/issues/46
+# TODO[Enhancement]: add functionality for /* comments in js (will need to change how body is parsed) @https://github.com/antoniouaa/krypto/issues/44 @https://github.com/antoniouaa/krypto/issues/46 @https://github.com/antoniouaa/krypto/issues/49
 
 
 class TODOError(Exception):

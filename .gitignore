@@ -21,3 +21,4 @@ dist
 # Testing and coverage
 .coverage
 htmlcov
+index.js

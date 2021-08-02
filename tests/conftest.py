@@ -14,6 +14,11 @@ sample_config = {
     "dry": True,
 }
 
+sample_symbols = {
+    "py": "#",
+    "js": "//",
+}
+
 raw_todo = """
 # TODO[Enhancement, Bug]: This is a sample title
 # this is the body of the todo
@@ -51,13 +56,7 @@ headers = {"Accept": "application/vnd.github.v3+json", "Authorization": "token a
 
 
 @pytest.fixture(scope="function")
-def mocked_requests():
-    with responses.RequestsMock() as test_session:
-        yield test_session
-
-
-@pytest.fixture(scope="function")
-def sample_todo(tmp_path):
+def sample_todo():
     info = {
         "title": "This is a sample title",
         "body": "this is the body of the todo",

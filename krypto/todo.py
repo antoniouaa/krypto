@@ -3,13 +3,9 @@ import pathlib
 from typing import List, Tuple
 from dataclasses import dataclass, field
 
-TODO_PREFIX = "# TODO"
-TODO_PREFIX_BODY = "#"
 SEPARATORS = r"[\s?,-/~#\\\s\s?]+"
 PATTERN = rf"[#|//] TODO(\[([a-zA-Z{SEPARATORS}]*)?\])?:([\d\w\s\-]*)(?:\s\@\s.*)?"
-# TODO[Enhancement]: add functionality for /* comments in js (will need to change how body is parsed)
-TODO_PREFIX_JS = "// TODO"
-TODO_PREFIX_BODY_JS = "//"
+# TODO[Enhancement]: add functionality for /* comments in js (will need to change how body is parsed) @https://github.com/antoniouaa/krypto/issues/44
 
 
 class TODOError(Exception):
@@ -32,12 +28,12 @@ class Todo:
         return f"TODO:\n{self.title} {_labels}:\n{self.body}\nIn {self.origin} - line {self.line_no}"
 
 
-def gather_todos(path: str) -> List[Todo]:
+def gather_todos(path: str, config: dict) -> List[Todo]:
     todos = []
     for file in pathlib.Path(path).glob("**/*.py"):
         if "test" not in str(file):
             with open(file) as f:
-                lst = parse(f.read(), file)
+                lst = parse(f.read(), config, file)
                 if lst:
                     todos.extend(lst)
     return todos
@@ -78,8 +74,11 @@ def attach_issue_to_todo(todo: Todo, url: str) -> None:
         f.write("".join(lines))
 
 
-def parse(raw_source: str, path: str = __file__) -> List[Todo]:
+def parse(raw_source: str, config: dict, path: str = __file__) -> List[Todo]:
     result: List[Todo] = []
+    COMMENT_SYMBOL = config["comment"]
+    TRIGGER_WORD = config["prefix"]
+    PREFIX = f"{COMMENT_SYMBOL} {TRIGGER_WORD}"
 
     if not raw_source:
         return []
@@ -90,26 +89,18 @@ def parse(raw_source: str, path: str = __file__) -> List[Todo]:
     possible = []
     start = False
     for index, line in enumerate(normalised_lines, start=1):
-        if not start and (
-            line.startswith(TODO_PREFIX) or line.startswith(TODO_PREFIX_JS)
-        ):
+        if not start and line.startswith(PREFIX):
             start = True
             possible.append((index, line))
-        elif start and (
-            line.startswith(TODO_PREFIX) or line.startswith(TODO_PREFIX_JS)
-        ):
+        elif start and line.startswith(PREFIX):
             start = False
             todo = process_raw_todo(possible)
             result.append(todo)
             todo = process_raw_todo([(index, line)])
             result.append(todo)
-        elif start and (
-            line.startswith(TODO_PREFIX_BODY) or line.startswith(TODO_PREFIX_BODY_JS)
-        ):
+        elif start and line.startswith(COMMENT_SYMBOL):
             possible.append((index, line))
-        elif start and not (
-            line.startswith(TODO_PREFIX_BODY) or line.startswith(TODO_PREFIX_BODY_JS)
-        ):
+        elif start and not line.startswith(COMMENT_SYMBOL):
             start = False
             todo = process_raw_todo(possible, path)
             result.append(todo)

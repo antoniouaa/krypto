@@ -6,7 +6,10 @@ from dataclasses import dataclass, field
 TODO_PREFIX = "# TODO"
 TODO_PREFIX_BODY = "#"
 SEPARATORS = r"[\s?,-/~#\\\s\s?]+"
-PATTERN = rf"# TODO(\[([a-zA-Z{SEPARATORS}]*)?\])?:([\d\w\s\-]*)(?:\s\@\s.*)?"
+PATTERN = rf"[#|//] TODO(\[([a-zA-Z{SEPARATORS}]*)?\])?:([\d\w\s\-]*)(?:\s\@\s.*)?"
+# TODO[Enhancement]: add functionality for /* comments in js (will need to change how body is parsed)
+TODO_PREFIX_JS = "// TODO"
+TODO_PREFIX_BODY_JS = "//"
 
 
 class TODOError(Exception):
@@ -87,18 +90,18 @@ def parse(raw_source: str, path: str = __file__) -> List[Todo]:
     possible = []
     start = False
     for index, line in enumerate(normalised_lines, start=1):
-        if not start and line.startswith(TODO_PREFIX):
+        if not start and (line.startswith(TODO_PREFIX) or line.startswith(TODO_PREFIX_JS)):
             start = True
             possible.append((index, line))
-        elif start and line.startswith(TODO_PREFIX):
+        elif start and (line.startswith(TODO_PREFIX) or line.startswith(TODO_PREFIX_JS)):
             start = False
             todo = process_raw_todo(possible)
             result.append(todo)
             todo = process_raw_todo([(index, line)])
             result.append(todo)
-        elif start and line.startswith(TODO_PREFIX_BODY):
+        elif start and (line.startswith(TODO_PREFIX_BODY) or line.startswith(TODO_PREFIX_BODY_JS)):
             possible.append((index, line))
-        elif start and not line.startswith(TODO_PREFIX_BODY):
+        elif start and not (line.startswith(TODO_PREFIX_BODY) or line.startswith(TODO_PREFIX_BODY_JS)):
             start = False
             todo = process_raw_todo(possible, path)
             result.append(todo)

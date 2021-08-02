@@ -1,8 +1,9 @@
 import pathlib
 
 import responses
+from click.testing import CliRunner
 
-from krypto.cli import IssueRunner
+from krypto.cli import IssueRunner, run, install
 from krypto.github import prepare_body
 from tests.conftest import (
     sample_config,
@@ -90,3 +91,20 @@ def test_runner_requests(mock_requests, sample_todo):
     assert len(response) == 2
     assert response[0] == [sample_todo.title]
     assert response[1] == []
+
+
+def test_click_run():
+    runner = CliRunner()
+    result = runner.invoke(run, [".", "--dry"])
+
+    assert result.exit_code == 0
+    assert "Running in dry mode" in result.output
+
+
+def test_click_install(tmp_path):
+    runner = CliRunner()
+    with runner.isolated_filesystem():
+        result = runner.invoke(install)
+
+        assert "Installing" in result.output
+        assert "New pre-push hook installed!" in result.output

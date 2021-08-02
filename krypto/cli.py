@@ -45,6 +45,8 @@ def cli():
 @click.option("--dry", is_flag=True)
 def run(path, config, dry):
     config = Config(config).parse()
+    if dry:
+        click.echo("\nRunning in dry mode")
     config.update({"dry": dry})
     runner = IssueRunner(path, Path.cwd(), config=config)
 
@@ -71,9 +73,9 @@ def run(path, config, dry):
 @cli.command("install")
 def install():
     click.echo("Installing")
-    git_path = Path(".git")
-    hooks = git_path / "hooks"
     try:
+        git_path = Path(".git")
+        hooks = git_path / "hooks"
         legacy = Path(hooks / "pre-push")
         legacy.rename(Path(legacy.parent, f"{legacy.name}-legacy"))
         click.echo("pre-push hook detected, attempting to rename")

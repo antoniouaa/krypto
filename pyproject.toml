@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "krypto"
-version = "1.0.0"
+version = "1.1.0"
 description = "A python API that creates issues in your repos based on TODO: comments in your code"
 authors = ["antoniouaa <antoniouaa@hotmail.com>"]
 license = "MIT"
@@ -27,8 +27,8 @@ krypto = "krypto:cli"
 
 # Example config
 [tool.krypto]
-comment = "//"
-prefix = "FIXME"
+comment = "#"
+prefix = "TODO"
 include = "tests"
 attach-issue = true
 

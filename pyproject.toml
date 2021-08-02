@@ -27,7 +27,6 @@ krypto = "krypto:cli"
 
 # Example config
 [tool.krypto]
-comment = "#"
 prefix = "TODO"
 include = "tests"
 attach-issue = true

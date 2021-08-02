@@ -12,7 +12,7 @@ def test_func(*args, **kwargs):
     # body of todo
 """
     with pytest.raises(TODOError):
-        parse(test_program, sample_config)
+        parse(test_program, extension="py")
 
 
 def test_todo_bad_brackets():
@@ -22,7 +22,7 @@ def test_func(*args, **kwargs):
     # body of todo
 """
     with pytest.raises(TODOError):
-        parse(parens, sample_config)
+        parse(parens, extension="py")
 
     curly = """
 def test_func(*args, **kwargs):
@@ -30,4 +30,4 @@ def test_func(*args, **kwargs):
     # body of todo
 """
     with pytest.raises(TODOError):
-        parse(curly, sample_config)
+        parse(curly, extension="py")

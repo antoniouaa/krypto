@@ -6,6 +6,10 @@ class PyProjectNotFound(Exception):
 
 
 DEFAULTS = {"prefix": "TODO", "attach-issue": False}
+SYMBOLS = {
+    "py": "#",
+    "js": "//",
+}
 
 
 class Config:

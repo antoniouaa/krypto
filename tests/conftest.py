@@ -14,6 +14,11 @@ sample_config = {
     "dry": True,
 }
 
+sample_symbols = {
+    "py": "#",
+    "js": "//",
+}
+
 raw_todo = """
 # TODO[Enhancement, Bug]: This is a sample title
 # this is the body of the todo

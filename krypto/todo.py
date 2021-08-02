@@ -3,9 +3,11 @@ import pathlib
 from typing import List, Tuple
 from dataclasses import dataclass, field
 
+from krypto.config import SYMBOLS
+
 SEPARATORS = r"[\s?,-/~#\\\s\s?]+"
 PATTERN = rf"[#|//] TODO(\[([a-zA-Z{SEPARATORS}]*)?\])?:([\d\w\s\-]*)(?:\s\@\s.*)?"
-# TODO[Enhancement]: add functionality for /* comments in js (will need to change how body is parsed) @https://github.com/antoniouaa/krypto/issues/44
+# TODO[Enhancement]: add functionality for /* comments in js (will need to change how body is parsed) @https://github.com/antoniouaa/krypto/issues/44 @https://github.com/antoniouaa/krypto/issues/46
 
 
 class TODOError(Exception):
@@ -28,14 +30,15 @@ class Todo:
         return f"TODO:\n{self.title} {_labels}:\n{self.body}\nIn {self.origin} - line {self.line_no}"
 
 
-def gather_todos(path: str, config: dict) -> List[Todo]:
+def gather_todos(path: str) -> List[Todo]:
     todos = []
-    for file in pathlib.Path(path).glob("**/*.py"):
-        if "test" not in str(file):
-            with open(file) as f:
-                lst = parse(f.read(), config, file)
-                if lst:
-                    todos.extend(lst)
+    for extension in SYMBOLS.keys():
+        for file in pathlib.Path(path).glob(f"**/*.{extension}"):
+            if "test" not in str(file):
+                with open(file) as f:
+                    lst = parse(f.read(), extension, file)
+                    if lst:
+                        todos.extend(lst)
     return todos
 
 
@@ -74,10 +77,10 @@ def attach_issue_to_todo(todo: Todo, url: str) -> None:
         f.write("".join(lines))
 
 
-def parse(raw_source: str, config: dict, path: str = __file__) -> List[Todo]:
+def parse(raw_source: str, extension: str, path: str = __file__) -> List[Todo]:
     result: List[Todo] = []
-    COMMENT_SYMBOL = config["comment"]
-    TRIGGER_WORD = config["prefix"]
+    COMMENT_SYMBOL = SYMBOLS[extension]
+    TRIGGER_WORD = "TODO"
     PREFIX = f"{COMMENT_SYMBOL} {TRIGGER_WORD}"
 
     if not raw_source:

@@ -12,7 +12,7 @@ def test_func(*args, **kwargs):
     # body of todo
 """
     with pytest.raises(TODOError):
-        parse(test_program, sample_config)
+        parse(test_program, extension="py")
 
 
 def test_todo_just_comments():
@@ -21,7 +21,7 @@ def test_func(*args, **kwargs):
     # not a todo
     # not a todo either
 """
-    todos = parse(test_program, sample_config)
+    todos = parse(test_program, extension="py")
     assert len(todos) == 0
 
 
@@ -29,7 +29,7 @@ def test_todo_none():
     test_program = """
 def test_func(*args, **kwargs):
 """
-    todos = parse(test_program, sample_config)
+    todos = parse(test_program, extension="py")
     assert len(todos) == 0
 
 
@@ -38,7 +38,7 @@ def test_todo_one():
 def test_func(*args, **kwargs):
     # TODO: Implement this function
 """
-    todos = parse(test_program, sample_config)
+    todos = parse(test_program, extension="py")
     assert len(todos) == 1
     assert todos[0].title == "Implement this function"
 
@@ -49,7 +49,7 @@ def test_func(*args, **kwargs):
     # TODO: Implement this function
     # TODO: Check if the assertions pass
 """
-    todos = parse(test_program, sample_config)
+    todos = parse(test_program, extension="py")
     print(todos)
     assert len(todos) == 2
     assert todos[0].title == "Implement this function"
@@ -63,7 +63,7 @@ def test_func(*args, **kwargs):
     # This function should perform some task
     # and return some output
 """
-    todos = parse(test_program, sample_config)
+    todos = parse(test_program, extension="py")
     assert len(todos) == 1
     todo = todos[0]
     assert todo.title == "Implement this function"
@@ -78,8 +78,7 @@ const testFunc = () => {
     // and return some output
 }
 """
-    sample_config["comment"] = "//"
-    todos = parse(test_program, sample_config)
+    todos = parse(test_program, extension="js")
     assert len(todos) == 1
     todo = todos[0]
     assert todo.title == "Implement this function"

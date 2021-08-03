@@ -20,16 +20,18 @@
 Convert todo comments in your code
 
 ```py
-# TODO: Make config file
+# TODO[Enhancement]: Make config file
 # Sometimes you might wanna have TODOs in your tests.
 # Right now krypto will completely ignore any file with the
 # substring "test" in the path. I would want to be able to
-# configure this behaviour.
+# configure this behaviour. Perhaps read from pyproject.toml?`
 ```
 
 to GitHub issues on the repository you're working on!
 
 ![Sample issue on Github](./assets/issue-on-github.png)
+
+---
 
 ## Env Variables
 
@@ -51,6 +53,8 @@ $env:TOKEN_GITHUB = token_here
 If you want the token to persist across sessions you need to add it to your `.bashrc` or `$PROFILE`.
 
 ## Usage
+
+---
 
 ### Write a TODO
 
@@ -90,8 +94,14 @@ Valid separators include `,` `/` `#` `~` `\`
 
 Pass the directory to look in for TODOs.
 
-```console
-krypto <path-to-dir>
+```sh
+krypto run <path-to-dir>
+```
+
+To perform the collection and parsing of TODOs but not the HTTP request to github, pass the `--dry` flag to the run command.
+
+```sh
+krypto run <path-to-dir> --dry
 ```
 
 Krypto does not look in tests/ at the moment.
@@ -100,29 +110,31 @@ Krypto does not look in tests/ at the moment.
 
 ## GitHub Action
 
-This action runs Krypto on your code and creates issues on the repo on your behalf
+This action runs Krypto on your code and creates issues on the repo on your behalf.
 
 ### Inputs
 
 ### `dir`
 
-**Required** The path to the directory to scan for TODOs
+**Required** The path to the directory to scan for TODOs.
 
 ### Env
 
 ### `TOKEN_GITHUB`
 
-**Required** A personal access token for github to use to authenticate the creation of issues on your repository
+**Required** A personal access token for github to use to authenticate the creation of issues on your repository.
 
 ### Example usage
 
 ```yaml
-uses: antoniouaa/krypto@v1
+uses: antoniouaa/krypto@v2
 with:
   dir: "."
 env:
   TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+_Run krypto on the root of the project_
 
 ---
 

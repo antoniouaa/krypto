@@ -21,3 +21,7 @@ from krypto.cli import cli as cli
 # it only considers todos in the master branch. It would be nice to be able
 # to either specify which branch you're on or have krypto automatically
 # figure it out and adjust links.
+
+
+# TODO[Bug]: CLI tests failing
+# Click is just being annoying with the testing

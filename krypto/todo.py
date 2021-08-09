@@ -40,7 +40,10 @@ def gather_todos(path: str, config: dict) -> List[Todo]:
             if "test" not in str(file):
                 with open(file) as f:
                     lst = parse(
-                        f.read(), extension, path=file, todo_prefix=config["prefix"]
+                        f.read(),
+                        extension,
+                        path=file,
+                        todo_prefix=config["prefix"],
                     )
                     if lst:
                         todos.extend(lst)

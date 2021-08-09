@@ -6,7 +6,7 @@ from typing import List, Tuple
 
 import requests
 
-from krypto.todo import Todo, attach_issue_to_todo
+from krypto.todo import Todo
 
 BASE_URL = "https://api.github.com"
 ISSUES_URL = "/repos/{}/{}/issues"

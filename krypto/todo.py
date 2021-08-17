@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from krypto.config import SYMBOLS
 
 SEPARATORS = r"[\s?,-/~#\\\s\s?]+"
-PATTERN = r"{}(\[([a-zA-Z{}]*)?\])?:([\d\w\s\-]*)(?:\s\@\s.*)?"
+PATTERN = r"{}(\[([a-zA-Z{}]*)?\])?:(.*)(?:\s\@\s.*)?"
 
 
 # TODO[Enhancement]: Add functionality for multiline comments in js @https://github.com/antoniouaa/krypto/issues/50

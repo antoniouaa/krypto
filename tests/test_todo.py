@@ -96,3 +96,15 @@ const testFunc = () => {
     todo = todos[0]
     assert todo.title == "Implement this function"
     assert todo.body == "This function should perform some task and return some output"
+
+
+def test_todo_with_dot():
+    test_program = """
+    # TODO: ensure foo.bar works
+    # body here    
+    """
+    todos = parse(test_program, extension="py", todo_prefix="TODO")
+    assert len(todos) == 1
+    todo = todos[0]
+    assert todo.title == "ensure foo.bar works"
+    assert todo.body == "body here"

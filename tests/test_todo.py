@@ -46,12 +46,17 @@ def test_todo_many():
 def test_func(*args, **kwargs):
     # TODO: Implement this function
     # TODO: Check if the assertions pass
+    # TODO: Check if the third one is registered
+    # TODO: Check if the fourth one is registered
+    # TODO: Check if the fifth one is registered
 """
     todos = parse(test_program, extension="py", todo_prefix="TODO")
-    print(todos)
-    assert len(todos) == 2
+    assert len(todos) == 5
     assert todos[0].title == "Implement this function"
     assert todos[1].title == "Check if the assertions pass"
+    assert todos[2].title == "Check if the third one is registered"
+    assert todos[3].title == "Check if the fourth one is registered"
+    assert todos[4].title == "Check if the fifth one is registered"
 
 
 def test_todo_with_body():
@@ -96,3 +101,20 @@ const testFunc = () => {
     todo = todos[0]
     assert todo.title == "Implement this function"
     assert todo.body == "This function should perform some task and return some output"
+
+
+def test_todo_with_dot():
+    test_program = """
+def func():
+    # TODO: ensure foo.bar works
+    # TODO: ensure foo-bar works too
+    # TODO: check other symbols/ ?'
+    """
+    todos = parse(test_program, extension="py")
+    assert len(todos) == 3
+    assert todos[0].title == "ensure foo.bar works"
+    assert todos[0].body == ""
+    assert todos[1].title == "ensure foo-bar works too"
+    assert todos[1].body == ""
+    assert todos[2].title == "check other symbols/ ?'"
+    assert todos[2].body == ""

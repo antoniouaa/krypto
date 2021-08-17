@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from krypto.config import SYMBOLS
 
 SEPARATORS = r"[\s?,-/~#\\\s\s?]+"
-PATTERN = r"{}(\[([a-zA-Z{}]*)?\])?:([\d\w\s\-]*)(?:\s\@\s.*)?"
+PATTERN = r"{}(\[([a-zA-Z{}]*)?\])?:(.*)(?:\s\@\s.*)?"
 
 
 # TODO[Enhancement]: Add functionality for multiline comments in js @https://github.com/antoniouaa/krypto/issues/50
@@ -112,11 +112,9 @@ def parse(
             start = True
             possible.append((index, line))
         elif start and line.startswith(PREFIX):
-            start = False
             todo = process_raw_todo(possible, prefix=PREFIX)
             result.append(todo)
-            todo = process_raw_todo([(index, line)], prefix=PREFIX)
-            result.append(todo)
+            possible = [(index, line)]
         elif start and line.startswith(COMMENT_SYMBOL):
             possible.append((index, line))
         elif start and not line.startswith(COMMENT_SYMBOL):

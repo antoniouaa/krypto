@@ -112,11 +112,9 @@ def parse(
             start = True
             possible.append((index, line))
         elif start and line.startswith(PREFIX):
-            start = False
             todo = process_raw_todo(possible, prefix=PREFIX)
             result.append(todo)
-            todo = process_raw_todo([(index, line)], prefix=PREFIX)
-            result.append(todo)
+            possible = [(index, line)]
         elif start and line.startswith(COMMENT_SYMBOL):
             possible.append((index, line))
         elif start and not line.startswith(COMMENT_SYMBOL):

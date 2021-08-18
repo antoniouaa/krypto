@@ -129,12 +129,12 @@ def make_requests(
     return successful, failed
 
 
-# TODO: Refactor make_requests @https://github.com/antoniouaa/krypto/issues/36
+# TODO: Refactor make_requests
 # It doesnt make sense that a github related function handles
 # attaching links to TODOs in the code locally
 # This should be moved to the `krypto.todo` file instead
 
 
-# TODO[Enhancement]: Add issue number to TODO in code @https://github.com/antoniouaa/krypto/issues/22
+# TODO[Enhancement]: Add issue number to TODO in code
 # It would be useful to have the assigned issue number from github
 # attached to the TODO in code so you can immediately identify the TODOs

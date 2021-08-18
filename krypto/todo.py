@@ -6,10 +6,10 @@ from dataclasses import dataclass, field
 from krypto.config import SYMBOLS
 
 SEPARATORS = r"[\s?,-/~#\\\s\s?]+"
-PATTERN = r"{}(\[([a-zA-Z{}]*)?\])?:(.*)(?:\s\@\s.*)?"
+PATTERN = r"{}(\[([a-zA-Z{}]*)?\])?:(.*)"
 
 
-# TODO[Enhancement]: Add functionality for multiline comments in js @https://github.com/antoniouaa/krypto/issues/50
+# TODO[Enhancement]: Add functionality for multiline comments in js
 # Will need to change the parser to deal with the new tokens
 
 
@@ -55,7 +55,7 @@ def extract_title_info(pattern: str, title_line: str) -> Tuple[str, List[str]]:
     if match is None:
         raise TODOError("TODO structure is malformed")
     _, labels, title = match.groups()
-    title = title.strip().split("@")[0]
+    title = title.strip()
     if labels:
         labels = re.split(SEPARATORS, labels)
         return title, [label.strip().capitalize() for label in labels]
@@ -76,17 +76,6 @@ def process_raw_todo(
     if not title:
         raise TODOError("TODOs require a title")
     return Todo(title=title, body=body, line_no=line_no, origin=path, labels=labels)
-
-
-def attach_issue_to_todo(todo: Todo, url: str) -> None:
-    with open(todo.origin) as f:
-        lines = f.readlines()
-    num = todo.line_no - 1
-    if lines[num].strip().endswith(str(todo.issue_no)):
-        return
-    lines[num] = f"{lines[num].rstrip()} @{url}\n"
-    with open(todo.origin, "w") as f:
-        f.write("".join(lines))
 
 
 def parse(

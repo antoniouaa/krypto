@@ -9,14 +9,14 @@ assert token is not None
 from krypto.cli import cli as cli
 
 
-# TODO[Enhancement]: Make config file @https://github.com/antoniouaa/krypto/issues/15
+# TODO[Enhancement]: Make config file
 # Sometimes you might wanna have TODOs in your tests.
 # Right now krypto will completely ignore any file with the
 # test substring in the title. I want to be able to configure this behaviour.
 # Perhaps read from pyproject.toml?
 
 
-# TODO[Enhancement]: Allow specifying branch name @https://github.com/antoniouaa/krypto/issues/40
+# TODO[Enhancement]: Allow specifying branch name
 # When krypto creates an issue and attaches a link to the todo locally,
 # it only considers todos in the master branch. It would be nice to be able
 # to either specify which branch you're on or have krypto automatically

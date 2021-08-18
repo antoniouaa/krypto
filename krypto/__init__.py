@@ -23,5 +23,5 @@ from krypto.cli import cli as cli
 # figure it out and adjust links.
 
 
-# TODO[Bug]: CLI tests failing
+# TODO[Bug]: CLI tests failing @https://github.com/antoniouaa/krypto/issues/51
 # Click is just being annoying with the testing

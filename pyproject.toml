@@ -28,7 +28,7 @@ krypto = "krypto:cli"
 # Example config
 [tool.krypto]
 prefix = "TODO"
-attach-issue = true
+attach-issue = false
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

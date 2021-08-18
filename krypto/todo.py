@@ -55,7 +55,7 @@ def extract_title_info(pattern: str, title_line: str) -> Tuple[str, List[str]]:
     if match is None:
         raise TODOError("TODO structure is malformed")
     _, labels, title = match.groups()
-    title = title.strip()
+    title = title.strip().split("@")[0]
     if labels:
         labels = re.split(SEPARATORS, labels)
         return title, [label.strip().capitalize() for label in labels]

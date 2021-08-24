@@ -10,6 +10,7 @@ python = "^3.7"
 requests = "^2.26.0"
 click = "^8.0.1"
 tomli = "^1.0.4"
+types-requests = "^2.25.6"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
@@ -18,12 +19,17 @@ taskipy = "^1.8.1"
 pytest-cov = "^2.12.1"
 coveralls = "^3.1.0"
 responses = "^0.13.3"
+mypy = "^0.910"
 
 [tool.taskipy.tasks]
-test = { cmd = "pytest -vvv --cov=krypto", help = "Run all the tests"}
+test = { cmd = "echo pytest -vvv --cov=krypto && pytest -vvv --cov=krypto", help = "Run all the tests"}
+type-check = { cmd = "echo mypy ./krypto/ && mypy ./krypto/", help = "Run type checking"}
 
 [tool.poetry.scripts]
 krypto = "krypto:cli"
+
+[tool.mypy]
+ignore_missing_imports = true
 
 # Example config
 [tool.krypto]

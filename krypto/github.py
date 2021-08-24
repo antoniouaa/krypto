@@ -49,7 +49,7 @@ def construct_url(username: str, repository: str) -> str:
     return BASE_URL + ISSUES_URL.format(username, repository)
 
 
-def post_issue(url: str, headers: dict, json: dict) -> Tuple[str, bool]:
+def post_issue(url: str, headers: dict, json: dict) -> Tuple[str, bool, str]:
     response = requests.post(url, headers=headers, json=json)
     issue_no = response.json()["number"]
     return json["title"], response.status_code == 201, issue_no

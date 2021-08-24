@@ -1,6 +1,6 @@
 import re
 import pathlib
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 from dataclasses import dataclass, field
 
 from krypto.config import SYMBOLS
@@ -24,7 +24,7 @@ class Todo:
     line_no: int
     origin: pathlib.Path
     labels: List[str] = field(default_factory=list)
-    issue_no: int = None
+    issue_no: Optional[int] = None
 
     def __str__(self) -> str:
         _labels = ""
@@ -42,7 +42,7 @@ def gather_todos(path: str, config: dict) -> List[Todo]:
                     lst = parse(
                         f.read(),
                         extension,
-                        path=file,
+                        path=str(file),
                         todo_prefix=config["prefix"],
                     )
                     if lst:
@@ -57,8 +57,8 @@ def extract_title_info(pattern: str, title_line: str) -> Tuple[str, List[str]]:
     _, labels, title = match.groups()
     title = title.strip()
     if labels:
-        labels = re.split(SEPARATORS, labels)
-        return title, [label.strip().capitalize() for label in labels]
+        labels_ = re.split(SEPARATORS, labels)
+        return title, [label.strip().capitalize() for label in labels_]
     return title, []
 
 
@@ -75,7 +75,13 @@ def process_raw_todo(
     title, labels = extract_title_info(PATTERN.format(prefix, SEPARATORS), title)
     if not title:
         raise TODOError("TODOs require a title")
-    return Todo(title=title, body=body, line_no=line_no, origin=path, labels=labels)
+    return Todo(
+        title=title,
+        body=body,
+        line_no=line_no,
+        origin=pathlib.Path(path),
+        labels=labels,
+    )
 
 
 def parse(

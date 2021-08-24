@@ -3,7 +3,7 @@ import pathlib
 import responses
 from click.testing import CliRunner
 
-from krypto.cli import IssueRunner, run, install
+from krypto.cli import IssueRunner, install
 from krypto.github import prepare_body
 from tests.conftest import (
     sample_config,
@@ -11,7 +11,6 @@ from tests.conftest import (
     repository,
     url,
     todo_from_json,
-    raw_todo,
 )
 
 

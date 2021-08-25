@@ -25,4 +25,4 @@ jobs:
 
       - name: Run the typechecking with mypy
         run: |
-          poetry run task typing
+          poetry run task mypy

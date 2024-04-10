@@ -4,9 +4,13 @@
 # Compilation artifacts
 **/__pycache__
 **/.pytest_cache
+**/.mypy_cache
+**/.pdm-build
+**/.pdm-python
 
 # Virtual environments
 **/venv
+**/.venv
 
 # Distribution artifacts
 **/*.egg-info

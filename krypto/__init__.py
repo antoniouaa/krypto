@@ -2,7 +2,7 @@ import os
 
 __version__ = "0.1.0"
 
-token = os.getenv("TOKEN_GITHUB")
+token = os.getenv("KRYPTO_TOKEN")
 assert token is not None
 
 

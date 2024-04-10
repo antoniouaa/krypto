@@ -13,8 +13,7 @@ PATTERN = r"{}(\[([a-zA-Z{}]*)?\])?:(.*)"
 # Will need to change the parser to deal with the new tokens
 
 
-class TODOError(Exception):
-    ...
+class TODOError(Exception): ...
 
 
 @dataclass
@@ -35,8 +34,9 @@ class Todo:
 
 def gather_todos(path: str, config: dict) -> List[Todo]:
     todos = []
+    src = config["src"]
     for extension in SYMBOLS.keys():
-        for file in pathlib.Path(path).glob(f"**/*.{extension}"):
+        for file in pathlib.Path(path).glob(f"{src}/**/*.{extension}"):
             if "test" not in str(file):
                 with open(file) as f:
                     lst = parse(

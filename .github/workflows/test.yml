@@ -28,6 +28,5 @@ jobs:
           poetry run task test
           poetry run coveralls --service=github
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+          KRYPTO_TOKEN: ${{ secrets.KRYPTO_TOKEN }}
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}

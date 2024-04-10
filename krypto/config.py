@@ -1,8 +1,7 @@
 import tomli
 
 
-class PyProjectNotFound(Exception):
-    ...
+class PyProjectNotFound(Exception): ...
 
 
 DEFAULTS = {"prefix": "TODO", "attach-issue": False}

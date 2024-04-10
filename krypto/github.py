@@ -68,6 +68,7 @@ def filter_issues(
     issue_state: dict = ALL_ISSUES,
 ) -> List[Todo]:
     response = requests.get(url, headers=headers, params=issue_state)
+    response.raise_for_status()
     existing = {issue["title"].lower(): issue for issue in response.json()}
     filtered = []
     for todo in todos:

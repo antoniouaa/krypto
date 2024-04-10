@@ -15,7 +15,7 @@ jobs:
         with:
           dir: "."
         env:
-          TOKEN_GITHUB: ${{secrets.GITHUB_TOKEN}}
+          KRYPTO_TOKEN: ${{secrets.KRYPTO_TOKEN}}
 
       - name: Output quantity
         run: |

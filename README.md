@@ -41,13 +41,13 @@ To acquire a token navigate to [Developer Settings](https://github.com/settings/
 With the token in hand, simply,
 
 ```sh
-export TOKEN_GITHUB = token_here
+export KRYPTO_TOKEN = <token_here>
 ```
 
 or
 
 ```ps
-$env:TOKEN_GITHUB = token_here
+$env:KRYPTO_TOKEN = token_here
 ```
 
 If you want the token to persist across sessions you need to add it to your `.bashrc` or `$PROFILE`.
@@ -63,30 +63,30 @@ The TODO must contain a title. Body and labels are optional.
 
 Examples:
 
-- Title only, no body or labels
+-   Title only, no body or labels
 
-  ```py
-  # TODO: This is a title
-  ```
+    ```py
+    # TODO: This is a title
+    ```
 
-- Title, body, no labels
+-   Title, body, no labels
 
-  ```py
-  # TODO: This is a title
-  # This is in the TODO body
-  ```
+    ```py
+    # TODO: This is a title
+    # This is in the TODO body
+    ```
 
-- Title, body and labels
+-   Title, body and labels
 
-  ```py
-  # TODO[Enhancement]: This is a title
-  # This is in the TODO body
-  ```
+    ```py
+    # TODO[Enhancement]: This is a title
+    # This is in the TODO body
+    ```
 
-- Multiple labels
-  ```py
-  # TODO[Enhancement, Bug, Documentation]: This is a title
-  ```
+-   Multiple labels
+    ```py
+    # TODO[Enhancement, Bug, Documentation]: This is a title
+    ```
 
 Valid separators include `,` `/` `#` `~` `\`
 
@@ -120,7 +120,7 @@ This action runs Krypto on your code and creates issues on the repo on your beha
 
 ### Env
 
-### `TOKEN_GITHUB`
+### `KRYPTO_TOKEN`
 
 **Required** A personal access token for github to use to authenticate the creation of issues on your repository.
 
@@ -129,9 +129,9 @@ This action runs Krypto on your code and creates issues on the repo on your beha
 ```yaml
 uses: antoniouaa/krypto@v2
 with:
-  dir: "."
+    dir: "."
 env:
-  TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+    KRYPTO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 _Run krypto on the root of the project_

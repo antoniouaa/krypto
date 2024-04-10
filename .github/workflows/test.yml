@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   test:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v2
@@ -14,8 +14,8 @@ jobs:
         with:
           python-version: 3.11
 
-      - name: Setup PDM
       - uses: actions/checkout@v4
+      - name: Setup PDM
         uses: pdm-project/setup-pdm@v4
 
       - name: Install dependencies

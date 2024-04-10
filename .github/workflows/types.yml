@@ -9,10 +9,10 @@ jobs:
 			- name: Checkout the repo
 				uses: actions/checkout@v2
 
-			- name: Install python 3.7
+			- name: Install python 3.11
 				uses: actions/setup-python@v2
 				with:
-						python-version: 3.7
+					python-version: 3.11
 
 			- uses: actions/checkout@v4
 			- name: Setup PDM

@@ -11,6 +11,7 @@ def test_config(tmp_path):
 [tool.krypto]
 comment = "#"
 prefix = "TODO"
+src = "krypto"
 include = "tests"
 attach-issue = false
     """.strip()
@@ -18,12 +19,12 @@ attach-issue = false
 
     config = Config(pyproject)
 
-    test_config = sample_config
-    del test_config["dry"]
-    del test_config["username"]
-    del test_config["repository"]
+    test_config_dict = sample_config
+    del test_config_dict["dry"]
+    del test_config_dict["username"]
+    del test_config_dict["repository"]
 
-    assert config.parse() == test_config
+    assert config.parse() == test_config_dict
 
 
 def test_config_malformed(tmp_path):
@@ -32,6 +33,7 @@ def test_config_malformed(tmp_path):
         """
 [tool.kry]
 prefix = "TODO"
+src = "krypto"
 include = "tests"
 attach-issue = false
     """.strip()

@@ -1,6 +1,3 @@
-import pathlib
-import re
-
 import pytest
 import responses
 
@@ -8,6 +5,7 @@ from krypto.todo import Todo
 
 sample_config = {
     "comment": "#",
+    "src": "krypto",
     "prefix": "TODO",
     "attach-issue": False,
     "include": "tests",

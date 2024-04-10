@@ -34,7 +34,6 @@ def test_request_body_no_body(sample_todo):
 
 def test_basename():
     username, repository = get_basename()
-    print(get_basename())
 
     assert username == "antoniouaa"
     assert repository == "krypto"

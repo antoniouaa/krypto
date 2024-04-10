@@ -3,14 +3,14 @@ name: Linting
 on: [push]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the repo
-        uses: actions/checkout@v2
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout the repo
+              uses: actions/checkout@v4
 
-      - name: Checkout black and run it
-        uses: psf/black@stable
-        with:
-          options: "--check --verbose"
-          src: "./krypto"
+            - name: Checkout black and run it
+              uses: psf/black@stable
+              with:
+                  options: "--check --verbose"
+                  src: "./krypto"

@@ -3,20 +3,20 @@ name: Krypto
 on: [push]
 
 jobs:
-  generate:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+    generate:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
 
-      - name: Generate issues
-        id: launch
-        uses: antoniouaa/krypto@v2
-        with:
-          dir: "."
-        env:
-          KRYPTO_TOKEN: ${{secrets.KRYPTO_TOKEN}}
+            - name: Generate issues
+              id: launch
+              uses: antoniouaa/krypto@v2
+              with:
+                  dir: "."
+              env:
+                  KRYPTO_TOKEN: ${{secrets.KRYPTO_TOKEN}}
 
-      - name: Output quantity
-        run: |
-          echo "${{steps.launch.outputs.quantity}} TODOs created"
+            - name: Output quantity
+              run: |
+                  echo "${{steps.launch.outputs.quantity}} TODOs created"

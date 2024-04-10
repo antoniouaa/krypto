@@ -3,24 +3,24 @@ name: MyPy
 on: [push]
 
 jobs:
-	type-checking:
-		runs-on: ubuntu-latest
-		steps:
-			- name: Checkout the repo
-				uses: actions/checkout@v2
+  type-checking:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
 
-			- name: Install python 3.11
-				uses: actions/setup-python@v2
-				with:
-					python-version: 3.11
+      - name: Install python 3.11
+        uses: actions/setup-python@v5
+        with:
+            python-version: 3.11
 
-			- uses: actions/checkout@v4
-			- name: Setup PDM
-				uses: pdm-project/setup-pdm@v4
+      - uses: actions/checkout@v4
+      - name: Setup PDM
+        uses: pdm-project/setup-pdm@v4
 
-			- name: Install dependencies
-				run: pdm install
+      - name: Install dependencies
+        run: pdm install
 
-			- name: Run the typechecking with mypy
-				run: |
-						pdm run task mypy
+      - name: Run the typechecking with mypy
+        run: |
+            pdm run task mypy

@@ -1,17 +1,17 @@
-FROM python:3.7
+FROM python:3.11
 
-ENV KRYPTO_TOKEN = $KRYPTO_TOKEN
-ENV REPOINFO $GITHUB_REPOSITORY
+ENV KRYPTO_TOKEN=$KRYPTO_TOKEN
+ENV REPOINFO=$GITHUB_REPOSITORY
 
 WORKDIR /krypto
 
 RUN apt-get -y update && apt-get -y upgrade
-RUN pip install poetry
+RUN pip install pdm
 
 COPY . /krypto
 
-RUN poetry install
-RUN poetry build
+RUN pdm install
+RUN pdm build
 RUN pip install /krypto
 
 LABEL "maintainer"="antoniouaa <antoniouaa@hotmail.com>"

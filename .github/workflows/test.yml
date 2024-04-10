@@ -9,24 +9,22 @@ jobs:
       - name: Checkout the repo
         uses: actions/checkout@v2
 
-      - name: Install python 3.7
+      - name: Install python 3.11
         uses: actions/setup-python@v2
         with:
-          python-version: 3.7
+          python-version: 3.11
 
-      - name: Install Poetry Action
-        uses: snok/install-poetry@v1.1.6
+      - name: Setup PDM
+      - uses: actions/checkout@v4
+        uses: pdm-project/setup-pdm@v4
 
       - name: Install dependencies
-        run: |
-          poetry install
-          poetry -V
-          poetry run pytest -V
+        run: pdm install
 
       - name: Run the tests
         run: |
-          poetry run task test
-          poetry run coveralls --service=github
+          pdm run task test
+          pdm run coveralls --service=github
         env:
           KRYPTO_TOKEN: ${{ secrets.KRYPTO_TOKEN }}
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}

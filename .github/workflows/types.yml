@@ -3,26 +3,24 @@ name: MyPy
 on: [push]
 
 jobs:
-  type-checking:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the repo
-        uses: actions/checkout@v2
+	type-checking:
+		runs-on: ubuntu-latest
+		steps:
+			- name: Checkout the repo
+				uses: actions/checkout@v2
 
-      - name: Install python 3.7
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.7
+			- name: Install python 3.7
+				uses: actions/setup-python@v2
+				with:
+						python-version: 3.7
 
-      - name: Install Poetry Action
-        uses: snok/install-poetry@v1.1.6
+			- uses: actions/checkout@v4
+			- name: Setup PDM
+				uses: pdm-project/setup-pdm@v4
 
-      - name: Install dependencies
-        run: |
-          poetry install
-          poetry -V
-          poetry run mypy -V
+			- name: Install dependencies
+				run: pdm install
 
-      - name: Run the typechecking with mypy
-        run: |
-          poetry run task mypy
+			- name: Run the typechecking with mypy
+				run: |
+						pdm run task mypy

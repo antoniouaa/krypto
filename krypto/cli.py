@@ -26,8 +26,7 @@ class IssueRunner:
 
 
 @click.group()
-def cli():
-    ...
+def cli(): ...
 
 
 @cli.command("run")

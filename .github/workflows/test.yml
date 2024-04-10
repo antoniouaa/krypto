@@ -26,5 +26,6 @@ jobs:
           pdm run task test
           pdm run coveralls --service=github
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           KRYPTO_TOKEN: ${{ secrets.KRYPTO_TOKEN }}
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}

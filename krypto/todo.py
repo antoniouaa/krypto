@@ -13,8 +13,7 @@ PATTERN = r"{}(\[([a-zA-Z{}]*)?\])?:(.*)"
 # Will need to change the parser to deal with the new tokens
 
 
-class TODOError(Exception):
-    ...
+class TODOError(Exception): ...
 
 
 @dataclass
